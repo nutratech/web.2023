@@ -1,0 +1,42 @@
+---
+name: ci
+
+'on':
+  push:
+    branches:
+      - '**'
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    runs-on: [self-hosted, dev]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Extras / Count Lines of Source Code
+        run: cloc HEAD --exclude-dir=package-lock.json
+
+      - name: Install requirements
+        run: npm ci
+
+      # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      # Deploy as long as it builds
+      # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      - name: Build
+        run: npm run build
+
+      # TODO: how to copy over on prod?
+      - name: Copy static files over
+        run: rm -rf /var/www/app/* && mv build/* /var/www/app/
+
+      # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      # Lint
+      # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      - name: Lint
+        run: npm run lint
+
+      - name: Check
+        run: npm run check

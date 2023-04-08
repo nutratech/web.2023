@@ -1,4 +1,6 @@
 .DS_Store
+*.swp
+
 /.idea
 node_modules
 /build
@@ -9,3 +11,4 @@ node_modules
 !.env.example
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+coverage/
