@@ -3,7 +3,10 @@
 </script>
 
 <title>Home Page | NutraTech</title>
-<h1>Calculators</h1>
-<p>Work in progress...</p>
 
-<p><a href="/">Home page</a> - Click to go back</p>
+<main class="container">
+	<h1>Calculators</h1>
+	<p>Work in progress...</p>
+
+	<p><a href="/">Home page</a> - Click to go back</p>
+</main>
