@@ -5,7 +5,6 @@
 <title>Home Page | NutraTech</title>
 <h1>Welcome to NutraTech</h1>
 
-<!--Get environment dynamically: prefix title [DEV]-->
 <p>Visit <a href="/calculators/">/calculators</a> for the calculators</p>
 
 <h2>Externals</h2>
