@@ -29,7 +29,8 @@ jobs:
         run: npm run build
 
       # TODO: how to copy over on prod?
-      - name: Copy static files over
+      - name: Deploy (dev) [Copy static files over]
+        if: github.ref == 'refs/heads/dev'
         run: rm -rf /var/www/app/* && mv build/* /var/www/app/
 
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
