@@ -7,7 +7,7 @@
 <main class="container">
 	<h1>Welcome to NutraTech</h1>
 
-	<p>Visit <a href="/calculators/">/calculators</a> for the calculators</p>
+	<p>Visit <a href="/calculators">/calculators</a> for the calculators</p>
 
 	<h2>Externals</h2>
 	<p>Visit <a rel="external" href="/blog/">/blog/</a> for the blog</p>
