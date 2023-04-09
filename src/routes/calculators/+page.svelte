@@ -4,7 +4,7 @@
 	export function submitForm(elem) {
 		if (elem.value) {
 			console.info(`elem.value=${elem.value}`);
-			elem.form.submit();
+			// elem.form.submit();
 		}
 	}
 </script>
@@ -17,9 +17,9 @@
 	<p>Calculators for various fitness metrics.</p>
 
 	<h2>One-rep max</h2>
-	<form>
+	<form onsubmit="submitForm(this)">
 		<p>Weight lifted</p>
-		<input type="number" placeholder="Weight lifted, e.g. 85" onchange="this.form.submit()" />
+		<input type="number" placeholder="Weight lifted, e.g. 85" onchange="submitForm()" />
 		<p>Number of reps performed</p>
 		<input type="number" placeholder="Reps performed, e.g. 10" onchange="this.form.submit()" />
 	</form>
