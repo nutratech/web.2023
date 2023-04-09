@@ -5,15 +5,13 @@
 	// VARIABLES - One rep max
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-	let ormWeightLifted;
-	let ormRepsPerformed;
+	let ormWeightLifted = 0;
+	let ormRepsPerformed = 0;
 	let ormTableData = [[]];
 
 	export function updateTable1RM() {
-		console.info(`ormWeightLifted=${ormWeightLifted}`);
-		console.info(`ormRepsPerformed=${ormRepsPerformed}`);
-		if (ormWeightLifted && ormRepsPerformed) {
-			ormTableData = [[0, 20, 20, 20]];
+		if (ormWeightLifted > 0 && ormRepsPerformed > 0) {
+			ormTableData = [[ormRepsPerformed, ormWeightLifted, ormWeightLifted, ormWeightLifted]];
 		} else {
 			ormTableData = [[]];
 		}
@@ -35,12 +33,15 @@
 		<input
 			type="number"
 			placeholder="Weight lifted, e.g. 85"
+			min="0"
 			bind:value={ormWeightLifted}
 			on:input={updateTable1RM}
 		/>
 		<p>Number of reps performed</p>
 		<input
 			type="number"
+			min="0"
+			max="20"
 			placeholder="Reps performed, e.g. 10"
 			bind:value={ormRepsPerformed}
 			on:input={updateTable1RM}
