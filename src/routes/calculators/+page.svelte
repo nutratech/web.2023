@@ -1,5 +1,12 @@
 <script>
 	import '@picocss/pico';
+
+	export function submitForm(elem) {
+		if (elem.value) {
+			console.info(`elem.value=${elem.value}`);
+			elem.form.submit();
+		}
+	}
 </script>
 
 <title>Calculators | NutraTech</title>
@@ -12,10 +19,22 @@
 	<h2>One-rep max</h2>
 	<form>
 		<p>Weight lifted</p>
-		<input type="number" placeholder="Weight lifted, e.g. 85" />
+		<input type="number" placeholder="Weight lifted, e.g. 85" onchange="this.form.submit()" />
 		<p>Number of reps performed</p>
-		<input type="number" placeholder="Reps performed, e.g. 10" />
+		<input type="number" placeholder="Reps performed, e.g. 10" onchange="this.form.submit()" />
 	</form>
+	<p>Predicted max weight (for <i>n</i> reps)</p>
+	<table>
+		<thead>
+			<tr>
+				<th>n</th>
+				<th>Epley</th>
+				<th>Brzycki</th>
+				<th>dos Remedios</th>
+			</tr>
+		</thead>
+		<tbody />
+	</table>
 
 	<h2>Calorie expenditure (BMR)</h2>
 
