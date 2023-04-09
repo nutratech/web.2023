@@ -1,3 +1,7 @@
+<script>
+	import '@picocss/pico';
+</script>
+
 <title>Home Page | NutraTech</title>
 <h1>Welcome to NutraTech</h1>
 
