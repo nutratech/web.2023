@@ -1,0 +1,2 @@
+svelte.config.js linguist-language=TypeScript
+.eslintrc.cjs linguist-language=TypeScript
