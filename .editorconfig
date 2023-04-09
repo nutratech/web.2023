@@ -1,0 +1,2 @@
+[*.{js.ts,html,svelte}]
+indent_style = tab
