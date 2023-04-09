@@ -6,7 +6,7 @@
 <h1>Welcome to NutraTech</h1>
 
 <!--Get environment dynamically: prefix title [DEV]-->
-<p>Visit <a href="/calculators/">/calculators/</a> for the calculators</p>
+<p>Visit <a href="/calculators/">/calculators</a> for the calculators</p>
 
 <h2>Externals</h2>
 <p>Visit <a rel="external" href="/blog/">/blog/</a> for the blog</p>
