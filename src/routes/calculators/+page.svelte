@@ -1,21 +1,6 @@
 <script>
 	import '@picocss/pico';
-
-	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	// VARIABLES - One rep max
-	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-	let ormWeightLifted = 0;
-	let ormRepsPerformed = 0;
-	let ormTableData = [[]];
-
-	export function updateTable1RM() {
-		if (ormWeightLifted > 0 && ormRepsPerformed > 0) {
-			ormTableData = [[ormRepsPerformed, ormWeightLifted, ormWeightLifted, ormWeightLifted]];
-		} else {
-			ormTableData = [[]];
-		}
-	}
+	import { ormRepsPerformed, ormTableData, ormWeightLifted, updateTable1RM } from "./+page.js";
 </script>
 
 <title>Calculators | NutraTech</title>
