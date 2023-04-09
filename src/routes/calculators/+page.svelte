@@ -1,11 +1,15 @@
 <script>
 	import '@picocss/pico';
 
-	export function submitForm(elem) {
-		if (elem.value) {
-			console.info(`elem.value=${elem.value}`);
-			// elem.form.submit();
-		}
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// VARIABLES - One rep max
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	let ormWeightLifted = -1;
+
+	export function updateTable1RM(e) {
+		console.info(`e.target=${JSON.stringify(e.target)}`);
+		console.info(`e.target.value=${e.target.value}`);
 	}
 </script>
 
@@ -19,9 +23,9 @@
 	<h2>One-rep max</h2>
 	<form onsubmit="submitForm(this)">
 		<p>Weight lifted</p>
-		<input type="number" placeholder="Weight lifted, e.g. 85" onchange="submitForm()" />
+		<input type="number" placeholder="Weight lifted, e.g. 85" on:input={updateTable1RM} />
 		<p>Number of reps performed</p>
-		<input type="number" placeholder="Reps performed, e.g. 10" onchange="this.form.submit()" />
+		<input type="number" placeholder="Reps performed, e.g. 10" on:input={updateTable1RM} />
 	</form>
 	<p>Predicted max weight (for <i>n</i> reps)</p>
 	<table>
