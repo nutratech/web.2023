@@ -7,8 +7,8 @@
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	let ormTableData: number[][] = [[]];
-	let ormWeightLifted = 275;
-	let ormRepsPerformed = 5;
+	let ormWeightLifted = 0;
+	let ormRepsPerformed = 0;
 
 	function updateTable1RM() {
 		if (ormWeightLifted > 0 && ormRepsPerformed > 0) {
@@ -32,8 +32,9 @@
 	<h1>Calculators</h1>
 	<p><a href="/">Home page</a> - Click to go back</p>
 	<p>Calculators for various fitness metrics.</p>
+
 	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-	<!--	One rep max-->
+	<!-- One rep max -->
 	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 	<h2>One-rep max</h2>
 	<form>
@@ -77,9 +78,18 @@
 		</tbody>
 	</table>
 
+	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+	<!-- Calorie expenditure (BMR) -->
+	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 	<h2>Calorie expenditure (BMR)</h2>
 
+	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+	<!-- Body fat % -->
+	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 	<h2>Body fat</h2>
 
+	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+	<!-- Lean body limits -->
+	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 	<h2>Lean body limits (young men)</h2>
 </main>
