@@ -1,11 +1,10 @@
 <script lang="ts">
 	import '@picocss/pico';
-	import { _calcOrmTableData } from './+page.ts';
+	import { _calcBmrTableData, _calcOrmTableData } from './+page.ts';
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	// VARIABLES - One rep max
+	// 1RM
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 	let ormTableData: number[][] = [];
 	let ormWeightLifted: number | null = null;
 	let ormRepsPerformed = 3;
@@ -33,6 +32,43 @@
 
 	// Call once to initialize table
 	updateTable1RM();
+
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// BMR
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	let bmrTableData: (number | string)[][] = [
+		['Katch McArdle', NaN, NaN],
+		['Cunningham', NaN, NaN],
+		['Mifflin St. Jeor', NaN, NaN],
+		['Harris Benedict', NaN, NaN]
+	];
+
+	let bmrActivityLevel = 2;
+	let bmrWeight: number | null = 73;
+	let bmrBodyFat: number | null = 15;
+	let bmrGender: string | null = null;
+	let bmrHeight: number | null = 179;
+	let bmrAge: number | null = 30;
+
+	function updateTableBmr() {
+		console.log(bmrGender);
+		console.log(`${bmrHeight} cm`);
+		// two required fields for all 4 calculators
+		if (bmrWeight != null && bmrBodyFat != null) {
+			// attempt to calculate
+			bmrTableData = _calcBmrTableData(
+				bmrActivityLevel,
+				bmrWeight,
+				bmrBodyFat,
+				bmrGender,
+				bmrHeight,
+				bmrAge
+			);
+		}
+	}
+
+	// Call once to initialize table
+	updateTableBmr();
 </script>
 
 <title>Calculators | NutraTech</title>
@@ -93,6 +129,76 @@
 	<!-- Calorie expenditure (BMR) -->
 	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 	<h2>Calorie expenditure (BMR)</h2>
+	<form>
+		<p>Weight (kg)</p>
+		<input
+			type="number"
+			placeholder="e.g. 75"
+			min="0"
+			max="400"
+			bind:value={bmrWeight}
+			on:input={updateTableBmr}
+		/>
+		<p>Activity Factor (1-5, sedentary-intense)</p>
+		<input
+			type="number"
+			min="1"
+			max="5"
+			placeholder="value from 1 to 5"
+			bind:value={bmrActivityLevel}
+			on:input={updateTableBmr}
+		/>
+		<p>Body fat (%)</p>
+		<input
+			type="number"
+			min="0"
+			max="75"
+			placeholder="e.g. 15"
+			bind:value={bmrBodyFat}
+			on:input={updateTableBmr}
+		/>
+		<p>Gender</p>
+		<select bind:value={bmrGender} on:input={updateTableBmr}>
+			<option>MALE</option>
+			<option>FEMALE</option>
+		</select>
+		<p>Height (cm)</p>
+		<input
+			type="number"
+			min="30"
+			max="275"
+			placeholder="e.g. 180"
+			bind:value={bmrHeight}
+			on:input={updateTableBmr}
+		/>
+		<p>Age (years)</p>
+		<input
+			type="number"
+			min="0"
+			max="175"
+			placeholder="e.g. 25"
+			bind:value={bmrAge}
+			on:input={updateTableBmr}
+		/>
+	</form>
+	<table>
+		<thead>
+			<tr>
+				<th>Equation</th>
+				<th>BMR</th>
+				<th>TDEE</th>
+			</tr>
+		</thead>
+		<tbody>
+			{#each Object.values(bmrTableData) as row}
+				<tr>
+					{#each Object.values(row) as cell}
+						<td>{cell}</td>
+					{/each}
+				</tr>
+			{/each}
+		</tbody>
+	</table>
 
 	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 	<!-- Body fat % -->

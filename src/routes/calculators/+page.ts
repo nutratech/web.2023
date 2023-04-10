@@ -1,3 +1,6 @@
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// One rep max
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const commonNReps = [1, 2, 3, 5, 6, 8, 10, 12, 15, 20];
 
 function ormEpley(weight: number, reps: number): Record<number, number> {
@@ -52,10 +55,8 @@ function ormDosRemedios(weight: number, reps: number): Record<number, number> {
 	return result;
 }
 
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// One rep max
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 export function _calcOrmTableData(weight: number, reps: number): number[][] {
+	// Compute results
 	const epleyResults = ormEpley(weight, reps);
 	const brzyckiResults = ormBrzycki(weight, reps);
 	const dosRemediosResults = ormDosRemedios(weight, reps);
@@ -65,5 +66,104 @@ export function _calcOrmTableData(weight: number, reps: number): number[][] {
 		const row: number[] = [Number(n), epleyResults[n], brzyckiResults[n], dosRemediosResults[n]];
 		rows.push(row);
 	}
+
+	// Return them
 	return rows;
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// BMR
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+const activityFactors = [0.2, 0.375, 0.55, 0.725, 0.9];
+function bmrKatchMcardle(activityFactor: number, weight: number, bodyFat: number): number[] {
+	const lbm = weight * (1 - bodyFat);
+	const bmr = 370 + 21.6 * lbm;
+	const tdee = bmr * (1 + activityFactor);
+
+	return [Math.round(bmr), Math.round(tdee)];
+}
+
+function bmrCunningham(activityFactor: number, weight: number, bodyFat: number): number[] {
+	const lbm = weight * (1 - bodyFat);
+	const bmr = 500 + 22 * lbm;
+	const tdee = bmr * (1 + activityFactor);
+
+	return [Math.round(bmr), Math.round(tdee)];
+}
+
+function bmrMifflinStJeor(
+	activityFactor: number,
+	weight: number,
+	gender: string,
+	height: number,
+	age: number
+): number[] {
+	function genderSpecificBMR(bmr: number) {
+		const _secondTerm: Record<string, number> = {
+			MALE: 5,
+			FEMALE: -161
+		};
+		return bmr + _secondTerm[gender];
+	}
+
+	const bmr = genderSpecificBMR(10 * weight + 6.25 + 6.25 * height - 5 * age);
+	const tdee = bmr * (1 + activityFactor);
+
+	return [Math.round(bmr), Math.round(tdee)];
+}
+
+function bmrHarrisBenedict(
+	activityFactor: number,
+	weight: number,
+	gender: string,
+	height: number,
+	age: number
+): number[] {
+	function genderSpecificBMR() {
+		const genderSpecificBmr: Record<string, number> = {
+			MALE: 13.397 * weight + 4.799 * height - 5.677 * age + 88.362,
+			FEMALE: 9.247 * weight + 3.098 * height - 4.33 * age + 447.593
+		};
+		return genderSpecificBmr[gender];
+	}
+
+	const bmr = genderSpecificBMR();
+	const tdee = bmr * (1 + activityFactor);
+
+	return [Math.round(bmr), Math.round(tdee)];
+}
+
+export function _calcBmrTableData(
+	activityLevel: number,
+	weight: number,
+	bodyFat: number | null,
+	gender: string | null,
+	height: number | null,
+	age: number | null
+): (number | string)[][] {
+	const activityFactor = activityFactors[activityLevel];
+
+	// Compute results
+	let rows =
+		bodyFat != null ? bmrKatchMcardle(activityFactor, weight, bodyFat / 100) : [String(), String()];
+	const resultsKatchMcArdle = ['Katch McArdle', ...rows];
+
+	rows =
+		bodyFat != null ? bmrCunningham(activityFactor, weight, bodyFat / 100) : [String(), String()];
+	const resultsCunningham = ['Cunningham', ...rows];
+
+	rows =
+		gender != null && height != null && age != null
+			? bmrMifflinStJeor(activityFactor, weight, gender, height, age)
+			: [String(), String()];
+	const resultsMifflinStJeor = ['Mifflin St Jeor', ...rows];
+
+	rows =
+		gender != null && height != null && age != null
+			? bmrHarrisBenedict(activityFactor, weight, gender, height, age)
+			: [String(), String()];
+	const resultsHarrisBenedict = ['Harris Benedict', ...rows];
+
+	// Return them
+	return [resultsKatchMcArdle, resultsCunningham, resultsMifflinStJeor, resultsHarrisBenedict];
 }
