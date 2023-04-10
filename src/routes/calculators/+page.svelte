@@ -98,24 +98,28 @@
 	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 	<h2>One-rep max</h2>
 	<form>
-		<p>Weight lifted</p>
-		<input
-			type="number"
-			placeholder="Weight lifted, e.g. 85"
-			min="0"
-			step="5"
-			bind:value={ormWeightLifted}
-			on:input={updateTable1RM}
-		/>
-		<p>Number of reps performed</p>
-		<input
-			type="number"
-			min="1"
-			max="20"
-			placeholder="Reps performed, e.g. 10"
-			bind:value={ormRepsPerformed}
-			on:input={updateTable1RM}
-		/>
+		<label>
+			Weight lifted
+			<input
+				type="number"
+				placeholder="Weight lifted, e.g. 85"
+				min="0"
+				step="5"
+				bind:value={ormWeightLifted}
+				on:input={updateTable1RM}
+			/>
+		</label>
+		<label
+			>Number of reps performed
+			<input
+				type="number"
+				min="1"
+				max="20"
+				placeholder="Reps performed, e.g. 10"
+				bind:value={ormRepsPerformed}
+				on:input={updateTable1RM}
+			/>
+		</label>
 	</form>
 
 	<!-- Table -->
@@ -146,56 +150,68 @@
 	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 	<h2>Calorie expenditure (BMR)</h2>
 	<form>
-		<p>Weight (kg)</p>
-		<input
-			type="number"
-			placeholder="e.g. 75"
-			min="0"
-			max="400"
-			bind:value={bmrWeight}
-			on:input={updateTableBmr}
-		/>
-		<p>Activity Factor (1-5, sedentary-intense)</p>
-		<input
-			type="number"
-			min="1"
-			max="5"
-			placeholder="value from 1 to 5"
-			bind:value={bmrActivityLevel}
-			on:input={updateTableBmr}
-		/>
-		<p>Body fat (%)</p>
-		<input
-			type="number"
-			min="0"
-			max="75"
-			placeholder="e.g. 15"
-			bind:value={bmrBodyFat}
-			on:input={updateTableBmr}
-		/>
-		<p>Gender</p>
-		<select bind:value={gender} on:input={updateTableBmr}>
-			<option>MALE</option>
-			<option>FEMALE</option>
-		</select>
-		<p>Height (cm)</p>
-		<input
-			type="number"
-			min="30"
-			max="275"
-			placeholder="e.g. 180"
-			bind:value={height}
-			on:input={updateTableBmr}
-		/>
-		<p>Age (years)</p>
-		<input
-			type="number"
-			min="0"
-			max="175"
-			placeholder="e.g. 25"
-			bind:value={age}
-			on:input={updateTableBmr}
-		/>
+		<label>
+			Weight (kg)
+			<input
+				type="number"
+				placeholder="e.g. 75"
+				min="0"
+				max="400"
+				bind:value={bmrWeight}
+				on:input={updateTableBmr}
+			/>
+		</label>
+		<label>
+			Activity Factor (1-5, sedentary-intense)
+			<input
+				type="number"
+				min="1"
+				max="5"
+				placeholder="value from 1 to 5"
+				bind:value={bmrActivityLevel}
+				on:input={updateTableBmr}
+			/>
+		</label>
+		<label>
+			Body fat (%)
+			<input
+				type="number"
+				min="0"
+				max="75"
+				placeholder="e.g. 15"
+				bind:value={bmrBodyFat}
+				on:input={updateTableBmr}
+			/>
+		</label>
+		<label>
+			Gender
+			<select bind:value={gender} on:change={updateTableBmr}>
+				<option>MALE</option>
+				<option>FEMALE</option>
+			</select>
+		</label>
+		<label>
+			Height (cm)
+			<input
+				type="number"
+				min="30"
+				max="275"
+				placeholder="e.g. 180"
+				bind:value={height}
+				on:input={updateTableBmr}
+			/>
+		</label>
+		<label>
+			Age (years)
+			<input
+				type="number"
+				min="0"
+				max="175"
+				placeholder="e.g. 25"
+				bind:value={age}
+				on:input={updateTableBmr}
+			/>
+		</label>
 	</form>
 
 	<!-- Table -->
@@ -223,38 +239,43 @@
 	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 	<h2>Body fat</h2>
 	<form>
-		<p>Gender</p>
-		<select bind:value={gender} on:change={updateTableBmr}>
-			<option>MALE</option>
-			<option>FEMALE</option>
-		</select>
-		<p>Height (cm)</p>
-		<input
-			type="number"
-			min="30"
-			max="275"
-			placeholder="e.g. 180"
-			bind:value={height}
-			on:input={updateTableBmr}
-		/>
-		<p>Age (years)</p>
-		<input
-			type="number"
-			min="0"
-			max="175"
-			placeholder="e.g. 25"
-			bind:value={age}
-			on:input={updateTableBmr}
-		/>
-		<p>Waist (cm)</p>
-		<input
-			type="number"
-			min="15"
-			max="400"
-			placeholder="e.g. 90"
-			bind:value={bfWaist}
-			on:input={updateTableBmr}
-		/>
+		<label>
+			<input type="radio" />
+			Gender
+		</label>
+		<label>
+			Height (cm)
+			<input
+				type="number"
+				min="30"
+				max="275"
+				placeholder="e.g. 180"
+				bind:value={height}
+				on:input={updateTableBmr}
+			/>
+		</label>
+		<label>
+			Age (years)
+			<input
+				type="number"
+				min="0"
+				max="175"
+				placeholder="e.g. 25"
+				bind:value={age}
+				on:input={updateTableBmr}
+			/>
+		</label>
+		<label>
+			Waist (cm)
+			<input
+				type="number"
+				min="15"
+				max="400"
+				placeholder="e.g. 90"
+				bind:value={bfWaist}
+				on:input={updateTableBmr}
+			/>
+		</label>
 	</form>
 
 	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
