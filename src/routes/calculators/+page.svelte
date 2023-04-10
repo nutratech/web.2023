@@ -7,7 +7,7 @@
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	let ormTableData: number[][] = [];
-	let ormWeightLifted = null;
+	let ormWeightLifted: number | null = null;
 	let ormRepsPerformed = 3;
 
 	function updateTable1RM() {
@@ -22,7 +22,7 @@
 			ormRepsPerformed = 0;
 		}
 		// Constrain weight > 0
-		if (ormWeightLifted < 0) {
+		if (ormWeightLifted && ormWeightLifted < 0) {
 			alert('Weight must be greater than 0!');
 			ormWeightLifted = 0;
 		}
