@@ -6,12 +6,12 @@
 	// VARIABLES - One rep max
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-	let ormTableData: number[][] = [[]];
+	let ormTableData: number[][] = [];
 	let ormWeightLifted = 0;
-	let ormRepsPerformed = 0;
+	let ormRepsPerformed = 1;
 
 	function updateTable1RM() {
-		if (ormWeightLifted > 0 && ormRepsPerformed > 0) {
+		if (ormWeightLifted >= 0 && ormRepsPerformed > 0) {
 			if (ormRepsPerformed > 20) {
 				alert("Reps can't exceed 20!");
 				ormRepsPerformed = 20;
@@ -50,7 +50,7 @@
 		<p>Number of reps performed</p>
 		<input
 			type="number"
-			min="0"
+			min="1"
 			max="20"
 			placeholder="Reps performed, e.g. 10"
 			bind:value={ormRepsPerformed}
