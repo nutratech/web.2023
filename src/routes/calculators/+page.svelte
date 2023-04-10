@@ -7,7 +7,7 @@
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	let ormTableData: number[][] = [];
 	let ormWeightLifted: number | null = null;
-	let ormRepsPerformed = 3;
+	let ormRepsPerformed = 5;
 
 	function updateTable1RM() {
 		// Constrain reps <= 20
@@ -102,7 +102,7 @@
 			Weight lifted
 			<input
 				type="number"
-				placeholder="Weight lifted, e.g. 85"
+				placeholder="e.g. 85"
 				min="0"
 				step="5"
 				bind:value={ormWeightLifted}
@@ -240,8 +240,11 @@
 	<h2>Body fat</h2>
 	<form>
 		<label>
-			<input type="radio" />
 			Gender
+			<select bind:value={gender} on:change={updateTableBmr}>
+				<option>MALE</option>
+				<option>FEMALE</option>
+			</select>
 		</label>
 		<label>
 			Height (cm)
