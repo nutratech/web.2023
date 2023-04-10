@@ -7,22 +7,31 @@
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	let ormTableData: number[][] = [];
-	let ormWeightLifted = 0;
-	let ormRepsPerformed = 1;
+	let ormWeightLifted = null;
+	let ormRepsPerformed = 3;
 
 	function updateTable1RM() {
-		if (ormWeightLifted >= 0 && ormRepsPerformed > 0) {
-			if (ormRepsPerformed > 20) {
-				alert("Reps can't exceed 20!");
-				ormRepsPerformed = 20;
-			}
-			ormTableData = _calcOrmTableData(ormWeightLifted, ormRepsPerformed);
-		} else {
-			ormTableData = [[]];
+		// Constrain reps <= 20
+		if (ormRepsPerformed > 20) {
+			alert("Reps can't exceed 20!");
+			ormRepsPerformed = 20;
 		}
+		// Constrain reps >= 0
+		if (ormRepsPerformed < 0) {
+			alert("Reps can't be less than 0!");
+			ormRepsPerformed = 0;
+		}
+		// Constrain weight > 0
+		if (ormWeightLifted < 0) {
+			alert('Weight must be greater than 0!');
+			ormWeightLifted = 0;
+		}
+
+		// Update table info
+		ormTableData = _calcOrmTableData(ormWeightLifted || 0, ormRepsPerformed || 0);
 	}
 
-	// FIXME: for testing purposes, call once; remove this!
+	// Call once to initialize table
 	updateTable1RM();
 </script>
 
@@ -57,7 +66,9 @@
 			on:input={updateTable1RM}
 		/>
 	</form>
+	<!-- Table -->
 	<h3>Predicted max weight</h3>
+	<p>You lifted {ormWeightLifted} for {ormRepsPerformed} reps!</p>
 	<table>
 		<thead>
 			<tr>

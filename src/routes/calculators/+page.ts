@@ -1,9 +1,9 @@
 const commonNReps = [1, 2, 3, 5, 6, 8, 10, 12, 15, 20];
 
 function ormEpley(weight: number, reps: number): Record<number, number> {
-	const oneRepMax = Math.round(weight * (1 + (reps - 1) / 30));
+	const oneRepMax = reps <= 0 ? 0 : Math.round(weight * (1 + (reps - 1) / 30));
 
-	const result: Record<number, number> = {};
+	const result: Record<number, number> = { 0: 0 };
 	for (const n of commonNReps) {
 		result[n] = Math.round((oneRepMax * 30) / (29 + Number(n)));
 	}
@@ -11,9 +11,9 @@ function ormEpley(weight: number, reps: number): Record<number, number> {
 }
 
 function ormBrzycki(weight: number, reps: number): Record<number, number> {
-	const oneRepMax = Math.round((weight * 36) / (36.995 - reps + 0.005 * reps ** 2));
+	const oneRepMax = reps <= 0 ? 0 : Math.round((weight * 36) / (36.995 - reps + 0.005 * reps ** 2));
 
-	const result: Record<number, number> = {};
+	const result: Record<number, number> = { 0: 0 };
 	for (const n of commonNReps) {
 		result[n] = Math.round((oneRepMax * (36.995 - Number(n) + 0.005 * Number(n) ** 2)) / 36);
 	}
@@ -43,9 +43,9 @@ function ormDosRemedios(weight: number, reps: number): Record<number, number> {
 		19: 0.559, // NOTE: I added this
 		20: 0.55 // NOTE: I added this, 20 reps is NOT in the original equation.
 	};
-	const oneRepMax = Math.round(weight / maxRepRatios[reps]);
+	const oneRepMax = reps <= 0 ? 0 : Math.round(weight / maxRepRatios[reps]);
 
-	const result: Record<number, number> = {};
+	const result: Record<number, number> = { 0: 0 };
 	for (const n of commonNReps) {
 		result[n] = Math.round(oneRepMax * maxRepRatios[Number(n)]);
 	}
