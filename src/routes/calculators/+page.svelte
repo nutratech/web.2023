@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import '@picocss/pico';
 	import { _calcOrmTableData } from './+page.ts';
 
@@ -6,7 +6,7 @@
 	// VARIABLES - One rep max
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-	let ormTableData = [[]];
+	let ormTableData: number[][] = [[]];
 	let ormWeightLifted = 275;
 	let ormRepsPerformed = 5;
 
@@ -21,6 +21,7 @@
 			ormTableData = [[]];
 		}
 	}
+
 	// FIXME: for testing purposes, call once; remove this!
 	updateTable1RM();
 </script>
