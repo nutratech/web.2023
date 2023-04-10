@@ -137,7 +137,7 @@ export function _calcBmrTableData(
 	activityLevel: number,
 	weight: number,
 	bodyFat: number | null,
-	gender: string | null,
+	gender: string,
 	height: number | null,
 	age: number | null
 ): (number | string)[][] {
@@ -153,17 +153,62 @@ export function _calcBmrTableData(
 	const resultsCunningham = ['Cunningham', ...rows];
 
 	rows =
-		gender != null && height != null && age != null
+		height != null && age != null
 			? bmrMifflinStJeor(activityFactor, weight, gender, height, age)
 			: [String(), String()];
 	const resultsMifflinStJeor = ['Mifflin St Jeor', ...rows];
 
 	rows =
-		gender != null && height != null && age != null
+		height != null && age != null
 			? bmrHarrisBenedict(activityFactor, weight, gender, height, age)
 			: [String(), String()];
 	const resultsHarrisBenedict = ['Harris Benedict', ...rows];
 
 	// Return them
 	return [resultsKatchMcArdle, resultsCunningham, resultsMifflinStJeor, resultsHarrisBenedict];
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Body fat
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+function bfNavy(
+	gender: string,
+	height: number,
+	waist: number,
+	neck: number,
+	hip: number | null
+): number {
+	// Validate and assign default to nullable "hip"
+	if (gender == 'FEMALE' && !hip) {
+		return 0;
+	} else if (gender == 'MALE') {
+		hip = 0; // placeholder value, not used for men anyway
+	}
+
+	const genderSpecificDenominator: Record<string, number> = {
+		MALE: 1.0324 - 0.19077 * Math.log10(waist - neck) + 0.15456 * Math.log10(height),
+		FEMALE: 1.29579 - 0.35004 * Math.log10(waist + hip - neck) + 0.221 * Math.log10(height)
+	};
+
+	return Number((495 / genderSpecificDenominator[gender] - 450).toFixed(2));
+}
+
+function bf3Site(): number {}
+
+function bf7Site(): number {}
+
+export function _calcBfTableData(
+	gender: string,
+	age: number | null,
+	height: number | null,
+	waist: number | null,
+	neck: number | null,
+	hip: number | null
+): number[] {
+	const navy =
+		height != null && waist != null && neck != null ? bfNavy(gender, height, waist, neck, hip) : [];
+	const threeSite = bf3Site();
+	const sevenSite = bf7Site();
+
+	return [navy, threeSite, sevenSite];
 }

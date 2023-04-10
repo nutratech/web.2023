@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '@picocss/pico';
-	import { _calcBmrTableData, _calcOrmTableData } from './+page.ts';
+	import { _calcBfTableData, _calcBmrTableData, _calcOrmTableData } from './+page.ts';
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// 1RM
@@ -37,22 +37,20 @@
 	// BMR
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	let bmrTableData: (number | string)[][] = [
-		['Katch McArdle', NaN, NaN],
-		['Cunningham', NaN, NaN],
-		['Mifflin St. Jeor', NaN, NaN],
-		['Harris Benedict', NaN, NaN]
+		['Katch McArdle', String(), String()],
+		['Cunningham', String(), String()],
+		['Mifflin St. Jeor', String(), String()],
+		['Harris Benedict', String(), String()]
 	];
 
 	let bmrActivityLevel = 2;
 	let bmrWeight: number | null = 73;
 	let bmrBodyFat: number | null = 15;
-	let bmrGender: string | null = null;
-	let bmrHeight: number | null = 179;
-	let bmrAge: number | null = 30;
+	let gender = 'MALE';
+	let height: number | null = 179;
+	let age: number | null = 30;
 
 	function updateTableBmr() {
-		console.log(bmrGender);
-		console.log(`${bmrHeight} cm`);
 		// two required fields for all 4 calculators
 		if (bmrWeight != null && bmrBodyFat != null) {
 			// attempt to calculate
@@ -60,15 +58,32 @@
 				bmrActivityLevel,
 				bmrWeight,
 				bmrBodyFat,
-				bmrGender,
-				bmrHeight,
-				bmrAge
+				gender,
+				height,
+				age
 			);
 		}
 	}
 
 	// Call once to initialize table
 	updateTableBmr();
+
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// Body fat
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	let bfTableData: number[] = [];
+
+	let bfWaist: number | null = 82;
+	let bfNeck: number | null = 40;
+	let bfHip: number | null = null;
+
+	function updateTableBf() {
+		// attempt to calculate
+		bfTableData = _calcBfTableData(gender, age, height, bfWaist, bfNeck, bfHip);
+	}
+
+	// Call once to initialize table
+	updateTableBf();
 </script>
 
 <title>Calculators | NutraTech</title>
@@ -102,6 +117,7 @@
 			on:input={updateTable1RM}
 		/>
 	</form>
+
 	<!-- Table -->
 	<h3>Predicted max weight</h3>
 	<p>You lifted {ormWeightLifted} for {ormRepsPerformed} reps!</p>
@@ -158,7 +174,7 @@
 			on:input={updateTableBmr}
 		/>
 		<p>Gender</p>
-		<select bind:value={bmrGender} on:input={updateTableBmr}>
+		<select bind:value={gender} on:input={updateTableBmr}>
 			<option>MALE</option>
 			<option>FEMALE</option>
 		</select>
@@ -168,7 +184,7 @@
 			min="30"
 			max="275"
 			placeholder="e.g. 180"
-			bind:value={bmrHeight}
+			bind:value={height}
 			on:input={updateTableBmr}
 		/>
 		<p>Age (years)</p>
@@ -177,10 +193,12 @@
 			min="0"
 			max="175"
 			placeholder="e.g. 25"
-			bind:value={bmrAge}
+			bind:value={age}
 			on:input={updateTableBmr}
 		/>
 	</form>
+
+	<!-- Table -->
 	<table>
 		<thead>
 			<tr>
@@ -204,6 +222,40 @@
 	<!-- Body fat % -->
 	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 	<h2>Body fat</h2>
+	<form>
+		<p>Gender</p>
+		<select bind:value={gender} on:change={updateTableBmr}>
+			<option>MALE</option>
+			<option>FEMALE</option>
+		</select>
+		<p>Height (cm)</p>
+		<input
+			type="number"
+			min="30"
+			max="275"
+			placeholder="e.g. 180"
+			bind:value={height}
+			on:input={updateTableBmr}
+		/>
+		<p>Age (years)</p>
+		<input
+			type="number"
+			min="0"
+			max="175"
+			placeholder="e.g. 25"
+			bind:value={age}
+			on:input={updateTableBmr}
+		/>
+		<p>Waist (cm)</p>
+		<input
+			type="number"
+			min="15"
+			max="400"
+			placeholder="e.g. 90"
+			bind:value={bfWaist}
+			on:input={updateTableBmr}
+		/>
+	</form>
 
 	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 	<!-- Lean body limits -->
