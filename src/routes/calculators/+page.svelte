@@ -1,6 +1,28 @@
 <script>
 	import '@picocss/pico';
-	import { ormRepsPerformed, ormTableData, ormWeightLifted, updateTable1RM } from "./+page.js";
+	import { _calcOrmTableData } from './+page.ts';
+
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// VARIABLES - One rep max
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	let ormTableData = [[]];
+	let ormWeightLifted = 275;
+	let ormRepsPerformed = 5;
+
+	function updateTable1RM() {
+		if (ormWeightLifted > 0 && ormRepsPerformed > 0) {
+			if (ormRepsPerformed > 20) {
+				alert("Reps can't exceed 20!");
+				ormRepsPerformed = 20;
+			}
+			ormTableData = _calcOrmTableData(ormWeightLifted, ormRepsPerformed);
+		} else {
+			ormTableData = [[]];
+		}
+	}
+	// FIXME: for testing purposes, call once; remove this!
+	updateTable1RM();
 </script>
 
 <title>Calculators | NutraTech</title>
@@ -19,6 +41,7 @@
 			type="number"
 			placeholder="Weight lifted, e.g. 85"
 			min="0"
+			step="5"
 			bind:value={ormWeightLifted}
 			on:input={updateTable1RM}
 		/>
@@ -32,11 +55,11 @@
 			on:input={updateTable1RM}
 		/>
 	</form>
-	<p>Predicted max weight (for <i>n</i> reps)</p>
+	<h3>Predicted max weight</h3>
 	<table>
 		<thead>
 			<tr>
-				<th>n</th>
+				<th># reps</th>
 				<th>Epley</th>
 				<th>Brzycki</th>
 				<th>dos Remedios</th>
