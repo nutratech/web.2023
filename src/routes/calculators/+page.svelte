@@ -123,7 +123,6 @@
 	</form>
 
 	<!-- Table -->
-	<h3>Predicted max weight</h3>
 	<p>You lifted {ormWeightLifted} for {ormRepsPerformed} reps!</p>
 	<table>
 		<thead>
