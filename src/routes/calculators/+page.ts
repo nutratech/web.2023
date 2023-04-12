@@ -179,9 +179,9 @@ function bfNavy(
 	hip: number | null
 ): number {
 	// Validate and assign default to nullable "hip"
-	if (gender == 'FEMALE' && !hip) {
-		return 0;
-	} else if (gender == 'MALE') {
+	if (gender == 'FEMALE' && hip == null) {
+		return NaN;
+	} else if (hip == null) {
 		hip = 0; // placeholder value, not used for men anyway
 	}
 
@@ -193,9 +193,45 @@ function bfNavy(
 	return Number((495 / genderSpecificDenominator[gender] - 450).toFixed(2));
 }
 
-function bf3Site(): number {}
+function bf3Site(
+	gender: string,
+	age: number,
+	chest: number,
+	abdominal: number,
+	thigh: number
+): number {
+	// Compute values
+	const st3 = chest + abdominal + thigh;
+	const genderSpecificDenominator: Record<string, number> = {
+		MALE: 1.10938 - 0.0008267 * st3 + 0.0000016 * st3 * st3 - 0.0002574 * age,
+		FEMALE: 1.089733 - 0.0009245 * st3 + 0.0000025 * st3 * st3 - 0.0000979 * age
+	};
 
-function bf7Site(): number {}
+	return Number((495 / genderSpecificDenominator[gender] - 450).toFixed(2));
+}
+
+function bf7Site(
+	gender: string,
+	age: number,
+	// 3-Site values
+	chest: number,
+	abdominal: number,
+	thigh: number,
+	// 7-Site values
+	tricep: number,
+	subscapula: number,
+	suprailiac: number,
+	midaxillary: number
+): number {
+	// Compute values
+	const st7 = chest + abdominal + thigh + tricep + subscapula + suprailiac + midaxillary;
+	const genderSpecificDenominator: Record<string, number> = {
+		MALE: 1.112 - 0.00043499 * st7 + 0.00000055 * st7 * st7 - 0.00028826 * age,
+		FEMALE: 1.097 - 0.00046971 * st7 + 0.00000056 * st7 * st7 - 0.00012828 * age
+	};
+
+	return Number((495 / genderSpecificDenominator[gender] - 450).toFixed(2));
+}
 
 export function _calcBfTableData(
 	gender: string,
@@ -203,12 +239,34 @@ export function _calcBfTableData(
 	height: number | null,
 	waist: number | null,
 	neck: number | null,
-	hip: number | null
+	hip: number | null,
+	// 3-Site values
+	chest: number | null,
+	abdominal: number | null,
+	thigh: number | null,
+	// 7-Site values
+	tricep: number | null,
+	subscapula: number | null,
+	suprailiac: number | null,
+	midaxillary: number | null
 ): number[] {
-	const navy =
-		height != null && waist != null && neck != null ? bfNavy(gender, height, waist, neck, hip) : [];
-	const threeSite = bf3Site();
-	const sevenSite = bf7Site();
+	// Gather navy, 3-site, and 7-site
+	const navyValid = height != null && waist != null && neck != null;
+	const navy = navyValid ? bfNavy(gender, height, waist, neck, hip) : NaN;
 
+	const threeSiteValid = age != null && chest != null && abdominal != null && thigh != null;
+	const threeSite = threeSiteValid ? bf3Site(gender, age, chest, abdominal, thigh) : NaN;
+
+	const sevenSiteValid =
+		threeSiteValid &&
+		tricep != null &&
+		subscapula != null &&
+		suprailiac != null &&
+		midaxillary != null;
+	const sevenSite = sevenSiteValid
+		? bf7Site(gender, age, chest, abdominal, thigh, tricep, subscapula, suprailiac, midaxillary)
+		: NaN;
+
+	// Return tuple of values
 	return [navy, threeSite, sevenSite];
 }
