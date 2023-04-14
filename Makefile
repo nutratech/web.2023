@@ -29,7 +29,7 @@ build/compress:
 .PHONY: build/upload
 build/upload:
 	if [ "${CI}" ]; then \
-		gh --version; \
+	    gh --version; \
 	    gh release create ${APP_VERSION} --generate-notes; \
 	    gh release upload ${APP_VERSION} build-${APP_VERSION}.tar.xz; \
 	fi
