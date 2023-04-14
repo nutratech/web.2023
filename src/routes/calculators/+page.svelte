@@ -1,6 +1,11 @@
 <script lang="ts">
 	import '@picocss/pico';
-	import { _calcBfTableData, _calcBmrTableData, _calcOrmTableData } from './+page.ts';
+	import {
+		_calcBfTableData,
+		_calcBmrTableData,
+		_calcLblTableData,
+		_calcOrmTableData
+	} from './+page.ts';
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// 1RM
@@ -106,6 +111,23 @@
 
 	// Call once to initialize table
 	updateTableBf();
+
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// Lean body limits
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	let lblTableData: (number | string)[][] = [];
+
+	let lblDesiredBodyFat: number | null = 5.5;
+	let lblWrist: number | null = 17.5;
+	let lblAnkle: number | null = 21.5;
+
+	function updateTableLbl() {
+		// attempt to calculate
+		lblTableData = _calcLblTableData(height, lblDesiredBodyFat, lblWrist, lblAnkle);
+	}
+
+	// Call once to initialize table
+	updateTableLbl();
 </script>
 
 <title>Calculators | NutraTech</title>
@@ -427,4 +449,78 @@
 	<!-- Lean body limits -->
 	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 	<h2>Lean body limits (young men)</h2>
+	<form>
+		<label>
+			Height (cm)
+			<input
+				type="number"
+				min="30"
+				max="275"
+				placeholder="e.g. 180"
+				bind:value={height}
+				on:input={updateTableLbl}
+			/>
+		</label>
+		<label>
+			Desired Body Fat %
+			<input
+				type="number"
+				min="4"
+				max="70"
+				placeholder="e.g. 15"
+				bind:value={lblDesiredBodyFat}
+				on:input={updateTableLbl}
+			/>
+		</label>
+		<label>
+			Wrist (cm)
+			<input
+				type="number"
+				min="4"
+				max="40"
+				placeholder="e.g. 17.5"
+				bind:value={lblWrist}
+				on:input={updateTableLbl}
+			/>
+		</label>
+		<label>
+			Ankle (cm)
+			<input
+				type="number"
+				min="4"
+				max="70"
+				placeholder="e.g. 21.5"
+				bind:value={lblAnkle}
+				on:input={updateTableLbl}
+			/>
+		</label>
+	</form>
+
+	<p>NOTE: Chest and other values are in inches.</p>
+	<!-- Table -->
+	<table>
+		<thead>
+			<tr>
+				<th>Equation</th>
+				<th>Condition</th>
+				<th>Weight</th>
+				<th>Lean mass</th>
+				<th>Chest</th>
+				<th>Arm</th>
+				<th>Forearm</th>
+				<th>Neck</th>
+				<th>Thigh</th>
+				<th>Calf</th>
+			</tr>
+		</thead>
+		<tbody>
+			{#each Object.values(lblTableData) as row}
+				<tr>
+					{#each Object.values(row) as cell}
+						<td>{cell}</td>
+					{/each}
+				</tr>
+			{/each}
+		</tbody>
+	</table>
 </main>

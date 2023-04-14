@@ -1,6 +1,6 @@
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // One rep max
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const commonNReps = [1, 2, 3, 5, 6, 8, 10, 12, 15, 20];
 
 function ormEpley(weight: number, reps: number): Record<number, number> {
@@ -71,9 +71,9 @@ export function _calcOrmTableData(weight: number, reps: number): number[][] {
 	return rows;
 }
 
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // BMR
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const activityFactors = [0.2, 0.375, 0.55, 0.725, 0.9];
 function bmrKatchMcardle(activityFactor: number, weight: number, bodyFat: number): number[] {
 	const lbm = weight * (1 - bodyFat);
@@ -168,9 +168,9 @@ export function _calcBmrTableData(
 	return [resultsKatchMcArdle, resultsCunningham, resultsMifflinStJeor, resultsHarrisBenedict];
 }
 
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // Body fat
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function bfNavy(
 	gender: string,
 	height: number,
@@ -269,4 +269,87 @@ export function _calcBfTableData(
 
 	// Return tuple of values
 	return [navy, threeSite, sevenSite];
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Lean body limits
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+function lblBerkhan(height: number): string[] {
+	const minWeight = Number(((height - 102) * 2.205).toFixed(1));
+	const maxWeight = Number(((height - 98) * 2.205).toFixed(1));
+	return ['Berkhan', 'Lean (5-6%)', `${minWeight} ~ ${maxWeight} lbs`];
+}
+
+function lblHelms(height: number, desiredBodyFat: number): (number | string)[] {
+	const minWeight = Number(((4851.0 * (height * 0.01) ** 2) / (100.0 - desiredBodyFat)).toFixed(1));
+	const maxWeight = Number(
+		((5402.25 * (height * 0.01) ** 2) / (100.0 - desiredBodyFat)).toFixed(1)
+	);
+	return ['Helms', `${desiredBodyFat}% body fat`, `${minWeight} ~ ${maxWeight} lbs`];
+}
+
+function lblCasey(
+	height: number,
+	desiredBodyFat: number,
+	wrist: number,
+	ankle: number
+): (number | string)[] {
+	// Convert to imperial units
+	height /= 2.54;
+	wrist /= 2.54;
+	ankle /= 2.54;
+
+	const lbm = Number(
+		(
+			height ** (3 / 2) *
+			(Math.sqrt(wrist) / 22.667 + Math.sqrt(ankle) / 17.0104) *
+			(1 + desiredBodyFat / 100 / 2.24)
+		).toFixed(1)
+	);
+	const weight = Number((lbm / (1 - desiredBodyFat / 100)).toFixed(1));
+
+	return [
+		// eq
+		'Casey',
+		// condition
+		`${desiredBodyFat}% body fat`,
+		// weight
+		`${weight} lbs`,
+		// lbm
+		`${lbm} lbs`,
+		// chest
+		Number((1.625 * wrist + 1.3682 * ankle + 0.3562 * height).toFixed(2)),
+		// arm
+		Number((1.1709 * wrist + 0.135 * height).toFixed(2)),
+		// forearm
+		Number((0.95 * wrist + 0.1041 * height).toFixed(2)),
+		// neck
+		Number((1.1875 * wrist + 0.1301 * height).toFixed(2)),
+		// thigh
+		Number((1.4737 * ankle + 0.1918 * height).toFixed(2)),
+		// calf
+		Number((0.9812 * ankle + 0.125 * height).toFixed(2))
+	];
+}
+
+export function _calcLblTableData(
+	height: number | null,
+	desiredBodyFat: number | null,
+	wrist: number | null,
+	ankle: number | null
+) {
+	const validBerkhan = height != null;
+	const berkhan = validBerkhan
+		? lblBerkhan(height)
+		: ['Berkhan', String(), 'Berkhan equation failed!'];
+	const validHelms = validBerkhan && desiredBodyFat != null;
+	const helms = validHelms
+		? lblHelms(height, desiredBodyFat)
+		: ['Helms', String(), 'Helms equation failed!'];
+	const casey =
+		validHelms && wrist != null && ankle != null
+			? lblCasey(height, desiredBodyFat, wrist, ankle)
+			: ['Casey', String(), 'Casey equation failed!'];
+
+	return [berkhan, helms, casey];
 }
