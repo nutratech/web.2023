@@ -43,6 +43,7 @@ install/prod:	## Install the release on prod (pulls latest tag)
 	wget https://github.com/nutratech/web.2023/releases/download/${APP_VERSION}/build.tar.xz
 	tar xf build.tar.xz
 	rm -rf /var/www/app/* && mv build/* /var/www/app/
+	curl -fI https://nutra.tk/
 
 
 
