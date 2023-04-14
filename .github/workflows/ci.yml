@@ -25,7 +25,6 @@ jobs:
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       # Build [Dev] (and Deploy)
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
       - name: Build (dev)
         if: github.ref == 'refs/heads/dev'
         run: npm run build:dev
@@ -46,15 +45,28 @@ jobs:
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       # Build [Prod] (and Upload binary)
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      - name: Check release version
+        id: check-release-version
+        if: github.ref == 'refs/heads/master'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          RELEASE_TAG=$(cat package.json | jq -r '.version')
+          echo RELEASE_TAG=$RELEASE_TAG
+          test -n "$RELEASE_TAG"
+          # Test that github-cli is working
+          gh --version
+          gh release list -L 1
+          gh release view $RELEASE_TAG || echo "PUBLISH=1" >> "$GITHUB_OUTPUT"
 
       - name: Build (production release)
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master' && steps.check-release-version.outputs.PUBLISH
         env:
           GH_TOKEN: ${{ github.token }}
-        run: set -o pipefail; make build/prod build/compress
+        run: set -o pipefail; make deploy/build
 
       - name: Upload artifacts (production release)
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master' && steps.check-release-version.outputs.PUBLISH
         env:
           GH_TOKEN: ${{ github.token }}
-        run: set -o pipefail; make build/upload
+        run: set -o pipefail; make deploy/upload
