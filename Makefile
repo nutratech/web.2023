@@ -38,7 +38,9 @@ build/upload:
 
 .PHONY: install/prod
 install/prod:	## Install the release on prod (pulls latest tag)
-	wget
+	git pull
+	wget https://github.com/nutratech/web.2023/releases/download/${APP_VERSION}/build.tar.xz
+	tar xf build.tar.xz
 
 
 
