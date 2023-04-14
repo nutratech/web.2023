@@ -23,11 +23,13 @@ build/prod:	## Build the release
 
 .PHONY: build/compress
 build/compress:
+	jq --version
 	tar cJf build-${APP_VERSION}.tar.xz build/
 
 .PHONY: build/upload
 build/upload:
 	if [ "${CI}" ]; then \
+		gh --version; \
 	    gh release create ${APP_VERSION} --generate-notes; \
 	    gh release upload ${APP_VERSION} build-${APP_VERSION}.tar.xz; \
 	fi
@@ -43,7 +45,4 @@ CLEAN_LOCS_ROOT ?= build/
 
 .PHONY: clean
 clean:
-	# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	# clean
-	# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	rm -rf ${CLEAN_LOCS_ROOT}

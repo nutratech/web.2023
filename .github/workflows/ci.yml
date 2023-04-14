@@ -49,7 +49,7 @@ jobs:
 
       - name: Build (prod)
         if: github.ref == 'refs/heads/prod'
-        run: make build/prod build/compress
+        run: set -o pipefail; make build/prod build/compress
 
       - name: Upload artifacts
-        run: make build/upload
+        run: set -o pipefail; make build/upload
