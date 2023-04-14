@@ -10,6 +10,31 @@ _help:
 
 
 # ---------------------------------------
+# Install requirements
+# ---------------------------------------
+
+.PHONY: deps
+deps:	## npm install
+	npm install
+
+
+
+# ---------------------------------------
+# Lint & format
+# ---------------------------------------
+
+.PHONY: format
+format:	## npm run format
+	npm run format
+
+.PHONY: lint
+lint:	## npm run lint && npm run check
+	npm run lint
+	npm run check
+
+
+
+# ---------------------------------------
 # Build & install
 # ---------------------------------------
 
@@ -20,33 +45,31 @@ APP_RELEASE_DATE ?= $(shell date --iso)
 build/prod: clean
 build/prod:	## Build the release
 	npm run build
-
-.PHONY: build/compress
-build/compress:
 	tar cJf build.tar.xz build/
+	du -h build.tar.xz
 
 .PHONY: build/upload
-build/upload:
-	jq --version
-	gh --version
-	if [ "${CI}" ]; then \
-	    gh release create ${APP_VERSION} --generate-notes; \
-	fi
-	if [ "${CI}" ]; then \
-	    gh release upload ${APP_VERSION} build.tar.xz; \
-	fi
+build/upload:	## Upload to GitHub releases
+	test -n "${APP_VERSION}"
+	test -f build.tar.xz
+	gh release create ${APP_VERSION} --generate-notes
+	gh release upload ${APP_VERSION} build.tar.xz
 
 PROJECT_NAME ?= web.2023
 DEPLOY_URL ?= https://nutra.tk/
 
-.PHONY: install/prod
-install/prod:	## Install the release on prod (pulls latest tag)
-	git pull
+.PHONY: build/install-prod
+build/install-prod:	## Install (on prod VPS)
+	git branch --show-current
+	git pull --tags
 	test -n "${APP_VERSION}"
-	wget https://github.com/nutratech/${PROJECT_NAME}/releases/download/${APP_VERSION}/build.tar.xz
+	# Download v${APP_VERSION}
+	curl -sSLO https://github.com/nutratech/${PROJECT_NAME}/releases/download/${APP_VERSION}/build.tar.xz
 	tar xf build.tar.xz
 	rm -f build.tar.xz
+	# Copy in place
 	rm -rf /var/www/app/* && mv build/* /var/www/app/
+	# Test live URL
 	curl -fI ${DEPLOY_URL}
 
 
@@ -55,8 +78,12 @@ install/prod:	## Install the release on prod (pulls latest tag)
 # Clean
 # ---------------------------------------
 
-CLEAN_LOCS_ROOT ?= build/
+CLEAN_LOCS_ROOT ?= *.tar.xz build/
 
 .PHONY: clean
-clean:
+clean:	## Clean up leftover bits and stuff from build
 	rm -rf ${CLEAN_LOCS_ROOT}
+
+.PHONY: purge
+purge:	## Purge package-lock.json && node_modules/
+	rm -rf package-lock.json node_modules/
