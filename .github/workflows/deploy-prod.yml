@@ -2,9 +2,10 @@
 name: ci
 
 'on':
-  push:
-    branches:
-      - '**'
+  workflow_run:
+    workflows: [ci]
+    types:
+      - completed
 
 permissions:
   contents: read
@@ -23,7 +24,7 @@ jobs:
         run: npm ci
 
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      # Build [Dev] (and Deploy)
+      # Build (and Deploy)
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
       - name: Build (dev)
@@ -34,6 +35,10 @@ jobs:
         if: github.ref == 'refs/heads/dev'
         run: rm -rf /var/www/app/* && mv build/* /var/www/app/
 
+      - name: Build (prod)
+        if: github.ref == 'refs/heads/master'
+        run: npm run build
+
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       # Lint
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -42,14 +47,3 @@ jobs:
 
       - name: Check
         run: npm run check
-
-      # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      # Build [Prod] (and Upload binary)
-      # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-      - name: Build (prod)
-        if: github.ref == 'refs/heads/prod'
-        run: make build/prod build/compress
-
-      - name: Upload artifacts
-        run: make build/upload

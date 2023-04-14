@@ -16,25 +16,22 @@ _help:
 APP_VERSION ?= $(shell cat package.json | jq -r '.version')
 APP_RELEASE_DATE ?= $(shell date --iso)
 
-.PHONY: build
-build: clean
-build:	## Build the release
-	# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	# build
-	# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.PHONY: build/prod
+build/prod: clean
+build/prod:	## Build the release
 	npm run build
-	# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	# compress
-	# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.PHONY: build/compress
+build/compress:
 	tar cJf build-${APP_VERSION}.tar.xz build/
-	# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	# tag & publish
-	# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.PHONY: build/upload
+build/upload:
 	if [ "${CI}" ]; then \
-# 		gh release create ${} --generate-notes
-	    git tag ${APP_VERSION} HEAD -m 'Version ${APP_VERSION}, released ${APP_RELEASE_DATE}.'; \
-	    git push origin ${APP_VERSION}; \
+	    gh release create ${APP_VERSION} --generate-notes; \
+	    gh release upload ${APP_VERSION} build-${APP_VERSION}.tar.xz; \
 	fi
+
 
 
 
