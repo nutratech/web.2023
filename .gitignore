@@ -1,5 +1,7 @@
 .DS_Store
 *.swp
+*.tar.xz
+*.tar.gz
 
 /.idea
 node_modules

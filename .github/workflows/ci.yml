@@ -23,20 +23,30 @@ jobs:
         run: npm ci
 
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      # Deploy as long as it builds
+      # Build (and Deploy)
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      - name: Build (prod)
-        if: github.ref == 'refs/heads/master'
-        run: npm run build
 
       - name: Build (dev)
         if: github.ref == 'refs/heads/dev'
         run: npm run build:dev
 
-      # TODO: how to copy over on prod?
       - name: Deploy (dev) [Copy static files over]
         if: github.ref == 'refs/heads/dev'
         run: rm -rf /var/www/app/* && mv build/* /var/www/app/
+
+      - name: Build (prod)
+        if: github.ref == 'refs/heads/prod'
+        run: npm run build
+
+      - name: Compress production build
+        if: github.ref == 'refs/heads/prod'
+        run: tar cJvf build-$(git rev-parse --short HEAD).tar.xz build/
+
+      # Deploy (prod) [Upload artifacts]
+      - uses: actions/upload-artifact@v3
+        if: github.ref == 'refs/heads/prod'
+        with:
+          path: build-$(git rev-parse --short HEAD).tar.xz
 
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       # Lint
