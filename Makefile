@@ -36,14 +36,18 @@ build/upload:
 	    gh release upload ${APP_VERSION} build.tar.xz; \
 	fi
 
+PROJECT_NAME ?= web.2023
+DEPLOY_URL ?= https://nutra.tk/
+
 .PHONY: install/prod
 install/prod:	## Install the release on prod (pulls latest tag)
 	git pull
-	jq --version
-	wget https://github.com/nutratech/web.2023/releases/download/${APP_VERSION}/build.tar.xz
+	test -n "${APP_VERSION}"
+	wget https://github.com/nutratech/${PROJECT_NAME}/releases/download/${APP_VERSION}/build.tar.xz
 	tar xf build.tar.xz
+	rm -f build.tar.xz
 	rm -rf /var/www/app/* && mv build/* /var/www/app/
-	curl -fI https://nutra.tk/
+	curl -fI ${DEPLOY_URL}
 
 
 
