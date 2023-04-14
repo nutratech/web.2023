@@ -12,38 +12,17 @@ permissions:
 
 jobs:
   ci:
-    runs-on: [self-hosted, dev]
+    runs-on: [self-hosted, prod]
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Extras / Count Lines of Source Code
-        run: cloc HEAD --exclude-dir=package-lock.json
-
-      - name: Install requirements
-        run: npm ci
 
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      # Build (and Deploy)
+      # Download (and Deploy)
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
       - name: Build (dev)
         if: github.ref == 'refs/heads/dev'
         run: npm run build:dev
 
-      - name: Deploy (dev) [Copy static files over]
+      - name: Deploy (prod) [Copy static files over]
         if: github.ref == 'refs/heads/dev'
         run: rm -rf /var/www/app/* && mv build/* /var/www/app/
-
-      - name: Build (prod)
-        if: github.ref == 'refs/heads/master'
-        run: npm run build
-
-      # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      # Lint
-      # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      - name: Lint
-        run: npm run lint
-
-      - name: Check
-        run: npm run check
