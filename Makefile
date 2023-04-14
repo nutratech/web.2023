@@ -23,17 +23,22 @@ build/prod:	## Build the release
 
 .PHONY: build/compress
 build/compress:
-	jq --version
-	tar cJf build-${APP_VERSION}.tar.xz build/
+	tar cJf build.tar.xz build/
 
 .PHONY: build/upload
 build/upload:
+	jq --version
+	gh --version
 	if [ "${CI}" ]; then \
-	    gh --version; \
 	    gh release create ${APP_VERSION} --generate-notes; \
-	    gh release upload ${APP_VERSION} build-${APP_VERSION}.tar.xz; \
+	fi
+	if [ "${CI}" ]; then \
+	    gh release upload ${APP_VERSION} build.tar.xz; \
 	fi
 
+.PHONY: install/prod
+install/prod:	## Install the release on prod (pulls latest tag)
+	wget
 
 
 
