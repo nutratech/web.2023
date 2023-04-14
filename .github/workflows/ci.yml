@@ -46,7 +46,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         if: github.ref == 'refs/heads/prod'
         with:
-          path: build-$(git rev-parse --short HEAD).tar.xz
+          path: build-*.tar.xz
 
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       # Lint
