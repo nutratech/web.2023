@@ -337,24 +337,24 @@
 			/>
 		</label>
 		<label>
-			Chest (mm)
+			Abdominal (mm)
 			<input
 				type="number"
 				min="2"
 				max="70"
 				placeholder="e.g. 20"
-				bind:value={bfSkinFoldChest}
+				bind:value={bfSkinFoldAbdominal}
 				on:input={updateTableBf}
 			/>
 		</label>
 		<label>
-			Chest (mm)
+			Thigh (mm)
 			<input
 				type="number"
 				min="2"
 				max="70"
 				placeholder="e.g. 20"
-				bind:value={bfSkinFoldChest}
+				bind:value={bfSkinFoldThigh}
 				on:input={updateTableBf}
 			/>
 		</label>
