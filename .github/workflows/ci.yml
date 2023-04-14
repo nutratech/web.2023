@@ -51,10 +51,14 @@ jobs:
         if: github.ref == 'refs/heads/prod'
         env:
           GH_TOKEN: ${{ github.token }}
+        permissions:
+          contents: write
         run: set -o pipefail; make build/prod build/compress
 
       - name: Upload artifacts
         if: github.ref == 'refs/heads/prod'
         env:
           GH_TOKEN: ${{ github.token }}
+        permissions:
+          contents: write
         run: set -o pipefail; make build/upload
