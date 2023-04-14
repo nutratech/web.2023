@@ -77,9 +77,31 @@
 	let bfNeck: number | null = 40;
 	let bfHip: number | null = null;
 
+	let bfSkinFoldChest: number | null = 7;
+	let bfSkinFoldAbdominal: number | null = 13;
+	let bfSkinFoldThigh: number | null = 10;
+	let bfSkinFoldTricep: number | null = 9;
+	let bfSkinFoldSubscapula: number | null = 9;
+	let bfSkinFoldSuprailiac: number | null = 11;
+	let bfSkinFoldMidaxillary: number | null = 10;
+
 	function updateTableBf() {
 		// attempt to calculate
-		bfTableData = _calcBfTableData(gender, age, height, bfWaist, bfNeck, bfHip);
+		bfTableData = _calcBfTableData(
+			gender,
+			age,
+			height,
+			bfWaist,
+			bfNeck,
+			bfHip,
+			bfSkinFoldChest,
+			bfSkinFoldAbdominal,
+			bfSkinFoldThigh,
+			bfSkinFoldTricep,
+			bfSkinFoldSubscapula,
+			bfSkinFoldSuprailiac,
+			bfSkinFoldMidaxillary
+		);
 	}
 
 	// Call once to initialize table
@@ -253,7 +275,7 @@
 				max="275"
 				placeholder="e.g. 180"
 				bind:value={height}
-				on:input={updateTableBmr}
+				on:input={updateTableBf}
 			/>
 		</label>
 		<label>
@@ -264,7 +286,7 @@
 				max="175"
 				placeholder="e.g. 25"
 				bind:value={age}
-				on:input={updateTableBmr}
+				on:input={updateTableBf}
 			/>
 		</label>
 		<label>
@@ -275,10 +297,131 @@
 				max="400"
 				placeholder="e.g. 90"
 				bind:value={bfWaist}
-				on:input={updateTableBmr}
+				on:input={updateTableBf}
+			/>
+		</label>
+		<label>
+			Neck (cm)
+			<input
+				type="number"
+				min="5"
+				max="90"
+				placeholder="e.g. 40"
+				bind:value={bfNeck}
+				on:input={updateTableBf}
+			/>
+		</label>
+		<label>
+			Hip (cm)
+			<!--suppress HtmlWrongAttributeValue -->
+			<input
+				disabled={gender === 'MALE'}
+				type="number"
+				min="15"
+				max="210"
+				placeholder="e.g. 80"
+				bind:value={bfHip}
+				on:input={updateTableBf}
+			/>
+		</label>
+		<!-- Three site values -->
+		<label>
+			Chest (mm)
+			<input
+				type="number"
+				min="2"
+				max="70"
+				placeholder="e.g. 20"
+				bind:value={bfSkinFoldChest}
+				on:input={updateTableBf}
+			/>
+		</label>
+		<label>
+			Chest (mm)
+			<input
+				type="number"
+				min="2"
+				max="70"
+				placeholder="e.g. 20"
+				bind:value={bfSkinFoldChest}
+				on:input={updateTableBf}
+			/>
+		</label>
+		<label>
+			Chest (mm)
+			<input
+				type="number"
+				min="2"
+				max="70"
+				placeholder="e.g. 20"
+				bind:value={bfSkinFoldChest}
+				on:input={updateTableBf}
+			/>
+		</label>
+		<!-- Seven site values -->
+		<label>
+			Tricep (mm)
+			<input
+				type="number"
+				min="2"
+				max="70"
+				placeholder="e.g. 20"
+				bind:value={bfSkinFoldTricep}
+				on:input={updateTableBf}
+			/>
+		</label>
+		<label>
+			Subscapula (mm)
+			<input
+				type="number"
+				min="2"
+				max="70"
+				placeholder="e.g. 20"
+				bind:value={bfSkinFoldSubscapula}
+				on:input={updateTableBf}
+			/>
+		</label>
+		<label>
+			Suprailiac (mm)
+			<input
+				type="number"
+				min="2"
+				max="70"
+				placeholder="e.g. 20"
+				bind:value={bfSkinFoldSuprailiac}
+				on:input={updateTableBf}
+			/>
+		</label>
+		<label>
+			Midaxillary (mm)
+			<input
+				type="number"
+				min="2"
+				max="70"
+				placeholder="e.g. 20"
+				bind:value={bfSkinFoldMidaxillary}
+				on:input={updateTableBf}
 			/>
 		</label>
 	</form>
+
+	<!-- Table -->
+	<table>
+		<thead>
+			<tr>
+				<th>Navy</th>
+				<th>3 Site</th>
+				<th>7 Site</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				{#each Object.values(bfTableData) as cell}
+					<td>{cell}</td>
+				{/each}
+			</tr>
+		</tbody>
+	</table>
 
 	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 	<!-- Lean body limits -->
