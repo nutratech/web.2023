@@ -11,6 +11,7 @@
 	// 1RM
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	let ormTableData: number[][] = [];
+
 	let ormWeightLifted: number | null = null;
 	let ormRepsPerformed = 5;
 
@@ -41,12 +42,7 @@
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// BMR
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	let bmrTableData: (number | string)[][] = [
-		['Katch McArdle', String(), String()],
-		['Cunningham', String(), String()],
-		['Mifflin St. Jeor', String(), String()],
-		['Harris Benedict', String(), String()]
-	];
+	let bmrTableData: (number | string)[][] = [];
 
 	let bmrActivityLevel = 2;
 	let bmrWeight: number | null = 73;
@@ -130,6 +126,12 @@
 	updateTableLbl();
 </script>
 
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!-- HTML -->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
 <title>Calculators | NutraTech</title>
 
 <main class="container">
@@ -167,7 +169,6 @@
 	</form>
 
 	<!-- Table -->
-	<p>You lifted {ormWeightLifted} for {ormRepsPerformed} reps!</p>
 	<table>
 		<thead>
 			<tr>
