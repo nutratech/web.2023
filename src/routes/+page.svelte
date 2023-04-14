@@ -1,9 +1,15 @@
+<script>
+	import '@picocss/pico';
+</script>
+
 <title>Home Page | NutraTech</title>
-<h1>Welcome to NutraTech</h1>
 
-<!--Get environment dynamically: prefix title [DEV]-->
-<p>Visit <a href="/calculators/">/calculators/</a> for the calculators</p>
+<main class="container">
+	<h1>Welcome to NutraTech</h1>
 
-<h2>Externals</h2>
-<p>Visit <a rel="external" href="/blog/">/blog/</a> for the blog</p>
-<p>Visit <a rel="external" href="/api/">/api/</a> for API documentation</p>
+	<p>Visit <a href="/calculators">/calculators</a> for the calculators</p>
+
+	<h2>Externals</h2>
+	<p>Visit <a rel="external" href="/blog/">/blog/</a> for the blog</p>
+	<p>Visit <a rel="external" href="/api/">/api/</a> for API documentation</p>
+</main>

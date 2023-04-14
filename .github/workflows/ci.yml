@@ -25,8 +25,13 @@ jobs:
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       # Deploy as long as it builds
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      - name: Build
+      - name: Build (prod)
+        if: github.ref == 'refs/heads/master'
         run: npm run build
+
+      - name: Build (dev)
+        if: github.ref == 'refs/heads/dev'
+        run: npm run build:dev
 
       # TODO: how to copy over on prod?
       - name: Deploy (dev) [Copy static files over]
