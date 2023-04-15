@@ -10,6 +10,16 @@ _help:
 
 
 # ---------------------------------------
+# Install requirements
+# ---------------------------------------
+
+.PHONY: deps
+deps:	## pnpm install
+	pnpm install
+
+
+
+# ---------------------------------------
 # Lint & format
 # ---------------------------------------
 
@@ -82,4 +92,4 @@ clean:	## Clean up leftover bits and stuff from build
 
 .PHONY: purge
 purge:	## Purge package-lock.json && node_modules/
-	rm -rf package-lock.json node_modules/
+	rm -rf package-lock.json pnpm-lock.yaml node_modules/
