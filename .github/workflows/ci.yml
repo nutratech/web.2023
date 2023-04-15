@@ -20,14 +20,14 @@ jobs:
         run: cloc HEAD --exclude-dir=package-lock.json
 
       - name: Install requirements
-        run: pnpm install
+        run: npm ci
 
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       # Build [Dev] (and Deploy)
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       - name: Build (dev)
         if: github.ref == 'refs/heads/dev'
-        run: pnpm run build:dev
+        run: npm run build:dev
 
       - name: Deploy (dev) [Copy static files over]
         if: github.ref == 'refs/heads/dev'
@@ -37,10 +37,10 @@ jobs:
       # Lint
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       - name: Lint
-        run: pnpm run lint
+        run: npm run lint
 
       - name: Check
-        run: pnpm run check
+        run: npm run check
 
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       # Build [Prod] (and Upload binary)

@@ -10,27 +10,17 @@ _help:
 
 
 # ---------------------------------------
-# Install requirements
-# ---------------------------------------
-
-.PHONY: init
-init:	## Install requirements
-	pnpm install
-
-
-
-# ---------------------------------------
 # Lint & format
 # ---------------------------------------
 
 .PHONY: format
-format:	## pnpm run format
-	pnpm run format
+format:	## npm run format
+	npm run format
 
 .PHONY: lint
-lint:	## pnpm run lint && pnpm run check
-	pnpm run lint
-	pnpm run check
+lint:	## npm run lint && npm run check
+	npm run lint
+	npm run check
 
 
 
@@ -44,7 +34,7 @@ APP_RELEASE_DATE ?= $(shell date --iso)
 .PHONY: deploy/build
 deploy/build: clean
 deploy/build:	## Build the release
-	pnpm run build
+	npm run build
 	tar cJf build.tar.xz build/
 	du -h build.tar.xz
 
