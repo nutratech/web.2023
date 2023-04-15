@@ -20,7 +20,7 @@ jobs:
         run: cloc HEAD --exclude-dir=package-lock.json
 
       - name: Install requirements
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       # Build [Dev] (and Deploy)
