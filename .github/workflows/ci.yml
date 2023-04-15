@@ -20,14 +20,14 @@ jobs:
         run: cloc HEAD --exclude-dir=package-lock.json
 
       - name: Install requirements
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       # Build [Dev] (and Deploy)
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       - name: Build (dev)
         if: github.ref == 'refs/heads/dev'
-        run: npm run build:dev
+        run: pnpm run build:dev
 
       - name: Deploy (dev) [Copy static files over]
         if: github.ref == 'refs/heads/dev'
@@ -37,10 +37,10 @@ jobs:
       # Lint
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       - name: Lint
-        run: npm run lint
+        run: pnpm run lint
 
       - name: Check
-        run: npm run check
+        run: pnpm run check
 
       # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       # Build [Prod] (and Upload binary)
