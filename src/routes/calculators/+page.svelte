@@ -45,6 +45,14 @@
 	let bmrTableData: (number | string)[][] = [];
 
 	let bmrActivityLevel = 2;
+	let bmrActivityLevelStrDict: Record<number, string> = {
+		1: 'Sedentary 1/5',
+		2: 'Light 2/5',
+		3: 'Moderate 3/5',
+		4: 'High 4/5',
+		5: 'Extreme 5/5'
+	};
+
 	let bmrWeight: number | null = 73;
 	let bmrBodyFat: number | null = 15;
 	let gender = 'MALE';
@@ -52,6 +60,7 @@
 	let age: number | null = 30;
 
 	function updateTableBmr() {
+		console.info(bmrActivityLevel);
 		// two required fields for all 4 calculators
 		if (bmrWeight != null && bmrBodyFat != null) {
 			// attempt to calculate
@@ -156,12 +165,11 @@
 			/>
 		</label>
 		<label
-			>Number of reps performed
+			>{ormRepsPerformed} reps performed
 			<input
-				type="number"
+				type="range"
 				min="1"
 				max="20"
-				placeholder="Reps performed, e.g. 10"
 				bind:value={ormRepsPerformed}
 				on:input={updateTable1RM}
 			/>
@@ -194,68 +202,78 @@
 	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 	<h2>Calorie expenditure (BMR)</h2>
 	<form>
-		<label>
-			Weight (kg)
-			<input
-				type="number"
-				placeholder="e.g. 75"
-				min="0"
-				max="400"
-				bind:value={bmrWeight}
-				on:input={updateTableBmr}
-			/>
-		</label>
-		<label>
-			Activity Factor (1-5, sedentary-intense)
-			<input
-				type="number"
-				min="1"
-				max="5"
-				placeholder="value from 1 to 5"
-				bind:value={bmrActivityLevel}
-				on:input={updateTableBmr}
-			/>
-		</label>
-		<label>
-			Body fat (%)
-			<input
-				type="number"
-				min="0"
-				max="75"
-				placeholder="e.g. 15"
-				bind:value={bmrBodyFat}
-				on:input={updateTableBmr}
-			/>
-		</label>
-		<label>
-			Gender
-			<select bind:value={gender} on:change={updateTableBmr}>
-				<option>MALE</option>
-				<option>FEMALE</option>
-			</select>
-		</label>
-		<label>
-			Height (cm)
-			<input
-				type="number"
-				min="30"
-				max="275"
-				placeholder="e.g. 180"
-				bind:value={height}
-				on:input={updateTableBmr}
-			/>
-		</label>
-		<label>
-			Age (years)
-			<input
-				type="number"
-				min="0"
-				max="175"
-				placeholder="e.g. 25"
-				bind:value={age}
-				on:input={updateTableBmr}
-			/>
-		</label>
+		<!-- McArdle & Cunningham -->
+		<h4>McArdle & Cunningham</h4>
+		<div class="grid">
+			<label>
+				Weight (kg)
+				<input
+					type="number"
+					placeholder="e.g. 75"
+					min="0"
+					max="400"
+					bind:value={bmrWeight}
+					on:input={updateTableBmr}
+				/>
+			</label>
+			<!-- TODO: tooltip showing info on different levels -->
+			<label>
+				Activity Factor<br />[{bmrActivityLevelStrDict[bmrActivityLevel]}]
+				<input
+					type="range"
+					min="1"
+					max="5"
+					bind:value={bmrActivityLevel}
+					on:input={updateTableBmr}
+				/>
+			</label>
+
+			<label>
+				Body fat (%)
+				<input
+					type="number"
+					min="0"
+					max="75"
+					placeholder="e.g. 15"
+					bind:value={bmrBodyFat}
+					on:input={updateTableBmr}
+				/>
+			</label>
+			<label>
+				Gender
+				<select bind:value={gender} on:change={updateTableBmr}>
+					<option>MALE</option>
+					<option>FEMALE</option>
+				</select>
+			</label>
+		</div>
+
+		<!-- St. Jeor & Benedict -->
+		<h4>St. Jeor & Benedict</h4>
+		<div class="grid">
+			<label>
+				Height (cm)
+				<input
+					type="number"
+					min="30"
+					max="275"
+					placeholder="e.g. 180"
+					bind:value={height}
+					on:input={updateTableBmr}
+				/>
+			</label>
+			<label>
+				Age (years)
+				<input
+					type="number"
+					min="0"
+					max="175"
+					placeholder="e.g. 25"
+					bind:value={age}
+					on:input={updateTableBmr}
+				/>
+			</label>
+		</div>
 	</form>
 
 	<!-- Table -->
@@ -283,149 +301,161 @@
 	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 	<h2>Body fat</h2>
 	<form>
-		<label>
-			Gender
-			<select bind:value={gender} on:change={updateTableBmr}>
-				<option>MALE</option>
-				<option>FEMALE</option>
-			</select>
-		</label>
-		<label>
-			Height (cm)
-			<input
-				type="number"
-				min="30"
-				max="275"
-				placeholder="e.g. 180"
-				bind:value={height}
-				on:input={updateTableBf}
-			/>
-		</label>
-		<label>
-			Age (years)
-			<input
-				type="number"
-				min="0"
-				max="175"
-				placeholder="e.g. 25"
-				bind:value={age}
-				on:input={updateTableBf}
-			/>
-		</label>
-		<label>
-			Waist (cm)
-			<input
-				type="number"
-				min="15"
-				max="400"
-				placeholder="e.g. 90"
-				bind:value={bfWaist}
-				on:input={updateTableBf}
-			/>
-		</label>
-		<label>
-			Neck (cm)
-			<input
-				type="number"
-				min="5"
-				max="90"
-				placeholder="e.g. 40"
-				bind:value={bfNeck}
-				on:input={updateTableBf}
-			/>
-		</label>
-		<label>
-			Hip (cm)
-			<!--suppress HtmlWrongAttributeValue -->
-			<input
-				disabled={gender === 'MALE'}
-				type="number"
-				min="15"
-				max="210"
-				placeholder="e.g. 80"
-				bind:value={bfHip}
-				on:input={updateTableBf}
-			/>
-		</label>
+		<!-- Navy values -->
+		<h4>Navy</h4>
+		<div class="grid">
+			<label>
+				Gender
+				<select bind:value={gender} on:change={updateTableBmr}>
+					<option>MALE</option>
+					<option>FEMALE</option>
+				</select>
+			</label>
+			<label>
+				Height (cm)
+				<input
+					type="number"
+					min="30"
+					max="275"
+					placeholder="e.g. 180"
+					bind:value={height}
+					on:input={updateTableBf}
+				/>
+			</label>
+			<label>
+				Age (years)
+				<input
+					type="number"
+					min="0"
+					max="175"
+					placeholder="e.g. 25"
+					bind:value={age}
+					on:input={updateTableBf}
+				/>
+			</label>
+			<label>
+				Waist (cm)
+				<input
+					type="number"
+					min="15"
+					max="400"
+					placeholder="e.g. 90"
+					bind:value={bfWaist}
+					on:input={updateTableBf}
+				/>
+			</label>
+			<label>
+				Neck (cm)
+				<input
+					type="number"
+					min="5"
+					max="90"
+					placeholder="e.g. 40"
+					bind:value={bfNeck}
+					on:input={updateTableBf}
+				/>
+			</label>
+			<label>
+				Hip (cm)
+				<!--suppress HtmlWrongAttributeValue -->
+				<input
+					disabled={gender === 'MALE'}
+					type="number"
+					min="15"
+					max="210"
+					placeholder="e.g. 80"
+					bind:value={bfHip}
+					on:input={updateTableBf}
+				/>
+			</label>
+		</div>
+
 		<!-- Three site values -->
-		<label>
-			Chest (mm)
-			<input
-				type="number"
-				min="2"
-				max="70"
-				placeholder="e.g. 20"
-				bind:value={bfSkinFoldChest}
-				on:input={updateTableBf}
-			/>
-		</label>
-		<label>
-			Abdominal (mm)
-			<input
-				type="number"
-				min="2"
-				max="70"
-				placeholder="e.g. 20"
-				bind:value={bfSkinFoldAbdominal}
-				on:input={updateTableBf}
-			/>
-		</label>
-		<label>
-			Thigh (mm)
-			<input
-				type="number"
-				min="2"
-				max="70"
-				placeholder="e.g. 20"
-				bind:value={bfSkinFoldThigh}
-				on:input={updateTableBf}
-			/>
-		</label>
+		<h4>Three site</h4>
+		<div class="grid">
+			<label>
+				Chest (mm)
+				<input
+					type="number"
+					min="2"
+					max="70"
+					placeholder="e.g. 20"
+					bind:value={bfSkinFoldChest}
+					on:input={updateTableBf}
+				/>
+			</label>
+			<label>
+				Abdominal (mm)
+				<input
+					type="number"
+					min="2"
+					max="70"
+					placeholder="e.g. 20"
+					bind:value={bfSkinFoldAbdominal}
+					on:input={updateTableBf}
+				/>
+			</label>
+			<label>
+				Thigh (mm)
+				<input
+					type="number"
+					min="2"
+					max="70"
+					placeholder="e.g. 20"
+					bind:value={bfSkinFoldThigh}
+					on:input={updateTableBf}
+				/>
+			</label>
+		</div>
+
 		<!-- Seven site values -->
-		<label>
-			Tricep (mm)
-			<input
-				type="number"
-				min="2"
-				max="70"
-				placeholder="e.g. 20"
-				bind:value={bfSkinFoldTricep}
-				on:input={updateTableBf}
-			/>
-		</label>
-		<label>
-			Subscapula (mm)
-			<input
-				type="number"
-				min="2"
-				max="70"
-				placeholder="e.g. 20"
-				bind:value={bfSkinFoldSubscapula}
-				on:input={updateTableBf}
-			/>
-		</label>
-		<label>
-			Suprailiac (mm)
-			<input
-				type="number"
-				min="2"
-				max="70"
-				placeholder="e.g. 20"
-				bind:value={bfSkinFoldSuprailiac}
-				on:input={updateTableBf}
-			/>
-		</label>
-		<label>
-			Midaxillary (mm)
-			<input
-				type="number"
-				min="2"
-				max="70"
-				placeholder="e.g. 20"
-				bind:value={bfSkinFoldMidaxillary}
-				on:input={updateTableBf}
-			/>
-		</label>
+		<h4>Seven site</h4>
+		<div class="grid">
+			<label>
+				Tricep (mm)
+				<input
+					type="number"
+					min="2"
+					max="70"
+					placeholder="e.g. 20"
+					bind:value={bfSkinFoldTricep}
+					on:input={updateTableBf}
+				/>
+			</label>
+			<label>
+				Subscapula (mm)
+				<input
+					type="number"
+					min="2"
+					max="70"
+					placeholder="e.g. 20"
+					bind:value={bfSkinFoldSubscapula}
+					on:input={updateTableBf}
+				/>
+			</label>
+			<label>
+				Suprailiac (mm)
+				<input
+					type="number"
+					min="2"
+					max="70"
+					placeholder="e.g. 20"
+					bind:value={bfSkinFoldSuprailiac}
+					on:input={updateTableBf}
+				/>
+			</label>
+			<label>
+				Midaxillary (mm)
+				<input
+					type="number"
+					min="2"
+					max="70"
+					placeholder="e.g. 20"
+					bind:value={bfSkinFoldMidaxillary}
+					on:input={updateTableBf}
+				/>
+			</label>
+		</div>
 	</form>
 
 	<!-- Table -->
@@ -451,69 +481,79 @@
 	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 	<h2>Lean body limits (young men)</h2>
 	<form>
-		<label>
-			Height (cm)
-			<input
-				type="number"
-				min="30"
-				max="275"
-				placeholder="e.g. 180"
-				bind:value={height}
-				on:input={updateTableLbl}
-			/>
-		</label>
-		<label>
-			Desired Body Fat %
-			<input
-				type="number"
-				min="4"
-				max="70"
-				placeholder="e.g. 15"
-				bind:value={lblDesiredBodyFat}
-				on:input={updateTableLbl}
-			/>
-		</label>
-		<label>
-			Wrist (cm)
-			<input
-				type="number"
-				min="4"
-				max="40"
-				placeholder="e.g. 17.5"
-				bind:value={lblWrist}
-				on:input={updateTableLbl}
-			/>
-		</label>
-		<label>
-			Ankle (cm)
-			<input
-				type="number"
-				min="4"
-				max="70"
-				placeholder="e.g. 21.5"
-				bind:value={lblAnkle}
-				on:input={updateTableLbl}
-			/>
-		</label>
+		<!-- Berkhan & Helms values -->
+		<h4>Berkhan & Helms</h4>
+		<div class="grid">
+			<label>
+				Height (cm)
+				<input
+					type="number"
+					min="30"
+					max="275"
+					placeholder="e.g. 180"
+					bind:value={height}
+					on:input={updateTableLbl}
+				/>
+			</label>
+			<label>
+				Desired Body Fat %
+				<input
+					type="number"
+					min="4"
+					max="70"
+					placeholder="e.g. 15"
+					bind:value={lblDesiredBodyFat}
+					on:input={updateTableLbl}
+				/>
+			</label>
+		</div>
+
+		<!-- Casey Butt values -->
+		<h4>Casey Butt, PhD</h4>
+		<div class="grid">
+			<label>
+				Wrist (cm)
+				<input
+					type="number"
+					min="4"
+					max="40"
+					placeholder="e.g. 17.5"
+					bind:value={lblWrist}
+					on:input={updateTableLbl}
+				/>
+			</label>
+			<label>
+				Ankle (cm)
+				<input
+					type="number"
+					min="4"
+					max="70"
+					placeholder="e.g. 21.5"
+					bind:value={lblAnkle}
+					on:input={updateTableLbl}
+				/>
+			</label>
+		</div>
 	</form>
 
-	<p>NOTE: Chest and other values are in inches.</p>
 	<!-- Table -->
+	<p><b>NOTE:</b> Chest and subsequent values are in inches.</p>
 	<table>
 		<thead>
 			<tr>
 				<th>Equation</th>
 				<th>Condition</th>
 				<th>Weight</th>
-				<th>Lean mass</th>
-				<th>Chest</th>
-				<th>Arm</th>
-				<th>Forearm</th>
-				<th>Neck</th>
-				<th>Thigh</th>
-				<th>Calf</th>
+				<!--<th>Lean mass</th>-->
+				<!--<th>Chest</th>-->
+				<!--<th>Arm</th>-->
+				<!--<th>Forearm</th>-->
+				<!--<th>Neck</th>-->
+				<!--<th>Thigh</th>-->
+				<!--<th>Calf</th>-->
 			</tr>
 		</thead>
+		<!-- TODO: Split last 7 elements (chest - calf) into separate table -->
 		<tbody>
 			{#each Object.values(lblTableData) as row}
 				<tr>
