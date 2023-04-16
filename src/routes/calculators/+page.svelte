@@ -5,8 +5,9 @@
 		_calcBmrTableData,
 		_calcLblTableData,
 		_calcOrmTableData
-	} from './+page.ts';
+	} from './calculators.ts';
 	import Header from '../Header.svelte';
+	import Footer from '../Footer.svelte';
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// 1RM
@@ -541,7 +542,6 @@
 	</form>
 
 	<!-- Table -->
-	<p><b>NOTE:</b> Chest and subsequent values are in inches.</p>
 	<table>
 		<thead>
 			<tr>
@@ -561,11 +561,36 @@
 		<tbody>
 			{#each Object.values(lblTableData) as row}
 				<tr>
-					{#each Object.values(row) as cell}
+					{#each Object.values(row.slice(0, 3)) as cell}
 						<td>{cell}</td>
 					{/each}
 				</tr>
 			{/each}
 		</tbody>
 	</table>
+	<!-- 2nd Table -->
+	<h4>Casey Butt</h4>
+	<table>
+		<thead>
+			<tr>
+				<th>Chest</th>
+				<th>Arm</th>
+				<th>Forearm</th>
+				<th>Neck</th>
+				<th>Thigh</th>
+				<th>Calf</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				{#each Object.values(lblTableData[2].slice(-6)) as cell}
+					<td>{cell}</td>
+				{/each}
+			</tr>
+		</tbody>
+	</table>
+	<p><b>NOTE:</b> Chest and the above values are in inches.</p>
+
+	<!-- Footer -->
+	<Footer />
 </main>

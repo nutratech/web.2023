@@ -1,6 +1,7 @@
 <script>
 	import '@picocss/pico';
 	import Header from './Header.svelte';
+	import Footer from './Footer.svelte';
 </script>
 
 <!-- Head -->
@@ -17,4 +18,6 @@
 	<h2>Externals</h2>
 	<p>Visit <a rel="external" href="/blog/">/blog/</a> for the blog</p>
 	<p>Visit <a rel="external" href="/api/">/api/</a> for API documentation</p>
+
+	<Footer />
 </main>

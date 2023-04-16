@@ -314,21 +314,21 @@ function lblCasey(
 		// condition
 		`${desiredBodyFat}% body fat`,
 		// weight
-		`${weight} lbs`
-		// // lbm
-		// `${lbm} lbs`,
-		// // chest
-		// Number((1.625 * wrist + 1.3682 * ankle + 0.3562 * height).toFixed(2)),
-		// // arm
-		// Number((1.1709 * wrist + 0.135 * height).toFixed(2)),
-		// // forearm
-		// Number((0.95 * wrist + 0.1041 * height).toFixed(2)),
-		// // neck
-		// Number((1.1875 * wrist + 0.1301 * height).toFixed(2)),
-		// // thigh
-		// Number((1.4737 * ankle + 0.1918 * height).toFixed(2)),
-		// // calf
-		// Number((0.9812 * ankle + 0.125 * height).toFixed(2))
+		`${weight} lbs`,
+		// lbm
+		`${lbm} lbs`,
+		// chest
+		Number((1.625 * wrist + 1.3682 * ankle + 0.3562 * height).toFixed(2)),
+		// arm
+		Number((1.1709 * wrist + 0.135 * height).toFixed(2)),
+		// forearm
+		Number((0.95 * wrist + 0.1041 * height).toFixed(2)),
+		// neck
+		Number((1.1875 * wrist + 0.1301 * height).toFixed(2)),
+		// thigh
+		Number((1.4737 * ankle + 0.1918 * height).toFixed(2)),
+		// calf
+		Number((0.9812 * ankle + 0.125 * height).toFixed(2))
 	];
 }
 
