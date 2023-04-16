@@ -71,13 +71,11 @@ deploy/delete:
 	git push origin --delete ${APP_VERSION}
 	- git tag -d ${APP_VERSION}
 
-PROJECT_NAME ?= web.2023
+PROJECT_NAME ?= web
 DEPLOY_URL ?= https://nutra.tk/
 
 .PHONY: deploy/install-prod
 deploy/install-prod:	## Install (on prod VPS)
-	git branch --show-current
-	git pull --tags
 	test -n "${APP_VERSION}"
 	# Download v${APP_VERSION}
 	curl -sSLO https://github.com/nutratech/${PROJECT_NAME}/releases/download/${APP_VERSION}/${APP_BUNDLE}
