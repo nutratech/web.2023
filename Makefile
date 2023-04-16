@@ -10,17 +10,30 @@ _help:
 
 
 # ---------------------------------------
+# Install requirements
+# ---------------------------------------
+
+.PHONY: init
+init:	## Install requirements (w/o --frozen-lockfile)
+	# Check version
+	[[ "$(shell pnpm --version)" =~ "8." ]]
+	# Install requirements
+	pnpm install
+
+
+
+# ---------------------------------------
 # Lint & format
 # ---------------------------------------
 
 .PHONY: format
-format:	## npm run format
-	npm run format
+format:	## pnpm format
+	pnpm format
 
 .PHONY: lint
-lint:	## npm run lint && npm run check
-	npm run lint
-	npm run check
+lint:	## pnpm lint && pnpm check
+	pnpm lint
+	pnpm check
 
 
 
@@ -28,13 +41,13 @@ lint:	## npm run lint && npm run check
 # Build & install
 # ---------------------------------------
 
-APP_VERSION ?= $(shell cat package.json | jq -r '.version')
+APP_VERSION ?= $(shell jq -r .version package.json)
 APP_RELEASE_DATE ?= $(shell date --iso)
 
 .PHONY: deploy/build
 deploy/build: clean
 deploy/build:	## Build the release
-	npm run build
+	pnpm build
 	tar cJf build.tar.xz build/
 	du -h build.tar.xz
 
