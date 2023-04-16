@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Extras / Count Lines of Source Code
-        run: cloc HEAD --exclude-dir=package-lock.json
+        run: make extras/cloc
 
       - name: Install requirements
         run: make init
@@ -63,7 +63,7 @@ jobs:
         if: github.ref == 'refs/heads/master' && steps.check-release-version.outputs.PUBLISH
         env:
           GH_TOKEN: ${{ github.token }}
-        run: set -o pipefail; make deploy/build
+        run: set -o pipefail; make build
 
       - name: Upload artifacts (production release)
         if: github.ref == 'refs/heads/master' && steps.check-release-version.outputs.PUBLISH

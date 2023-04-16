@@ -19,12 +19,18 @@ init:	## Install requirements (w/o --frozen-lockfile)
 	[[ "$(shell pnpm --version)" =~ "8." ]]
 	# Install requirements
 	pnpm install
+	# Sync svelte kit (optional)
+	pnpm svelte-kit sync
 
 
 
 # ---------------------------------------
-# Lint & format
+# Run, lint & format
 # ---------------------------------------
+
+.PHONY: run
+run:
+	pnpm dev
 
 .PHONY: format
 format:	## pnpm format
@@ -42,21 +48,22 @@ lint:	## pnpm lint && pnpm check
 # ---------------------------------------
 
 APP_VERSION ?= $(shell jq -r .version package.json)
+APP_BUNDLE ?= build-${APP_VERSION}.tar.xz
 APP_RELEASE_DATE ?= $(shell date --iso)
 
-.PHONY: deploy/build
-deploy/build: clean
-deploy/build:	## Build the release
+.PHONY: build
+build: clean
+build:	## Build the release
 	pnpm build
-	tar cJf build.tar.xz build/
-	du -h build.tar.xz
+	tar cJf build-${APP_VERSION}.tar.xz build/
+	du -h ${APP_BUNDLE}
 
 .PHONY: deploy/upload
 deploy/upload:	## Upload to GitHub releases
 	test -n "${APP_VERSION}"
-	test -f build.tar.xz
+	test -f ${APP_BUNDLE}
 	gh release create ${APP_VERSION} --generate-notes
-	gh release upload ${APP_VERSION} build.tar.xz
+	gh release upload ${APP_VERSION} ${APP_BUNDLE}
 
 .PHONY: deploy/delete
 deploy/delete:
@@ -73,9 +80,9 @@ deploy/install-prod:	## Install (on prod VPS)
 	git pull --tags
 	test -n "${APP_VERSION}"
 	# Download v${APP_VERSION}
-	curl -sSLO https://github.com/nutratech/${PROJECT_NAME}/releases/download/${APP_VERSION}/build.tar.xz
-	tar xf build.tar.xz
-	rm -f build.tar.xz
+	curl -sSLO https://github.com/nutratech/${PROJECT_NAME}/releases/download/${APP_VERSION}/${APP_BUNDLE}
+	tar xf ${APP_BUNDLE}
+	rm -f ${APP_BUNDLE}
 	# Copy in place
 	rm -rf /var/www/app/* && mv build/* /var/www/app/
 	# Test live URL
@@ -84,7 +91,7 @@ deploy/install-prod:	## Install (on prod VPS)
 
 
 # ---------------------------------------
-# Clean
+# Clean & extras
 # ---------------------------------------
 
 CLEAN_LOCS_ROOT ?= *.tar.xz build/
@@ -96,3 +103,7 @@ clean:	## Clean up leftover bits and stuff from build
 .PHONY: purge
 purge:	## Purge package-lock.json && node_modules/
 	rm -rf package-lock.json pnpm-lock.yaml node_modules/
+
+.PHONY: extras/cloc
+extras/cloc:
+	cloc HEAD --exclude-dir=svelte.config.js,pnpm-lock.yaml,package-lock.json

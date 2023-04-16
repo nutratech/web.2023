@@ -6,6 +6,7 @@
 		_calcLblTableData,
 		_calcOrmTableData
 	} from './+page.ts';
+	import Header from '../Header.svelte';
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// 1RM
@@ -141,11 +142,14 @@
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
+<!-- Head -->
 <title>Calculators | NutraTech</title>
+
+<!-- Body -->
+<Header />
 
 <main class="container">
 	<h1>Calculators</h1>
-	<p><a href="/">Home page</a> - Click to go back</p>
 	<p>Calculators for various fitness metrics.</p>
 
 	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->

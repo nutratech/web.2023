@@ -1,13 +1,18 @@
 <script>
 	import '@picocss/pico';
+	import Header from './Header.svelte';
 </script>
 
+<!-- Head -->
 <title>Home Page | NutraTech</title>
 
-<main class="container">
-	<h1>Welcome to NutraTech</h1>
+<!-- Body -->
+<Header />
 
-	<p>Visit <a href="/calculators">/calculators</a> for the calculators</p>
+<main class="container">
+	<h1>Home page</h1>
+	<p>Welcome!</p>
+	<p>Check out the blog, and the calculators.</p>
 
 	<h2>Externals</h2>
 	<p>Visit <a rel="external" href="/blog/">/blog/</a> for the blog</p>
