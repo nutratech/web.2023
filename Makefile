@@ -90,7 +90,7 @@ deploy/install-prod: _check-git-up-to-date
 deploy/install-prod:	## Install (on prod VPS)
 	# Check the version string was extracted from package.json
 	test -n "${APP_VERSION}"
-	# Download v${APP_VERSION}
+	# Download ${APP_VERSION}
 	curl -sSLO https://github.com/nutratech/${PROJECT_NAME}/releases/download/${APP_VERSION}/${APP_BUNDLE}
 	tar xf ${APP_BUNDLE}
 	rm -f ${APP_BUNDLE}
