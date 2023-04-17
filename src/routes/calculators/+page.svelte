@@ -122,7 +122,7 @@
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Lean body limits
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	let lblTableData: (number | string)[][] = [];
+	let lblTableData: (number | string | Record<string, number>)[][] = [];
 
 	let lblDesiredBodyFat: number | null = 5.5;
 	let lblWrist: number | null = 17.5;
@@ -217,6 +217,7 @@
 					placeholder="e.g. 75"
 					min="0"
 					max="400"
+					step="0.5"
 					bind:value={bmrWeight}
 					on:input={updateTableBmr}
 				/>
@@ -344,6 +345,7 @@
 					type="number"
 					min="15"
 					max="400"
+					step="0.5"
 					placeholder="e.g. 90"
 					bind:value={bfWaist}
 					on:input={updateTableBf}
@@ -355,6 +357,7 @@
 					type="number"
 					min="5"
 					max="90"
+					step="0.5"
 					placeholder="e.g. 40"
 					bind:value={bfNeck}
 					on:input={updateTableBf}
@@ -506,6 +509,7 @@
 					type="number"
 					min="4"
 					max="70"
+					step="0.5"
 					placeholder="e.g. 15"
 					bind:value={lblDesiredBodyFat}
 					on:input={updateTableLbl}
@@ -522,6 +526,7 @@
 					type="number"
 					min="4"
 					max="40"
+					step="0.25"
 					placeholder="e.g. 17.5"
 					bind:value={lblWrist}
 					on:input={updateTableLbl}
@@ -533,6 +538,7 @@
 					type="number"
 					min="4"
 					max="70"
+					step="0.25"
 					placeholder="e.g. 21.5"
 					bind:value={lblAnkle}
 					on:input={updateTableLbl}
@@ -548,13 +554,6 @@
 				<th>Equation</th>
 				<th>Condition</th>
 				<th>Weight</th>
-				<!--<th>Lean mass</th>-->
-				<!--<th>Chest</th>-->
-				<!--<th>Arm</th>-->
-				<!--<th>Forearm</th>-->
-				<!--<th>Neck</th>-->
-				<!--<th>Thigh</th>-->
-				<!--<th>Calf</th>-->
 			</tr>
 		</thead>
 		<!-- TODO: Split last 7 elements (chest - calf) into separate table -->
@@ -573,23 +572,20 @@
 	<table>
 		<thead>
 			<tr>
-				<th>Chest</th>
-				<th>Arm</th>
-				<th>Forearm</th>
-				<th>Neck</th>
-				<th>Thigh</th>
-				<th>Calf</th>
+				<th>Measurement</th>
+				<th>Max value</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				{#each Object.values(lblTableData[2].slice(-6)) as cell}
-					<td>{cell}</td>
-				{/each}
-			</tr>
+			{#each Object.entries(lblTableData.slice(-1)[0].slice(-1)[0]) as row}
+				<tr>
+					<td>{row[0]}</td>
+					<td>{row[1]} in</td>
+				</tr>
+			{/each}
 		</tbody>
 	</table>
-	<p><b>NOTE:</b> Chest and the above values are in inches.</p>
+	<p><b>TODO:</b> Add links to sources.</p>
 
 	<!-- Footer -->
 	<Footer />

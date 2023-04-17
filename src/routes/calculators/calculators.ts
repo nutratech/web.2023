@@ -293,7 +293,7 @@ function lblCasey(
 	desiredBodyFat: number,
 	wrist: number,
 	ankle: number
-): (number | string)[] {
+): (number | string | Record<string, number>)[] {
 	// Convert to imperial units
 	height /= 2.54;
 	wrist /= 2.54;
@@ -308,6 +308,18 @@ function lblCasey(
 	);
 	const weight = Number((lbm / (1 - desiredBodyFat / 100)).toFixed(1));
 
+	const additionalInfo = {
+		// lbl: `${lbm} lbs`,
+		chest: Number((1.625 * wrist + 1.3682 * ankle + 0.3562 * height).toFixed(2)),
+		arm: Number((1.1709 * wrist + 0.135 * height).toFixed(2)),
+		forearm: Number((0.95 * wrist + 0.1041 * height).toFixed(2)),
+		neck: Number((1.1875 * wrist + 0.1301 * height).toFixed(2)),
+		thigh: Number((1.4737 * ankle + 0.1918 * height).toFixed(2)),
+		calf: Number((0.9812 * ankle + 0.125 * height).toFixed(2))
+	};
+
+	console.info(additionalInfo);
+
 	return [
 		// eq
 		'Casey',
@@ -315,20 +327,8 @@ function lblCasey(
 		`${desiredBodyFat}% body fat`,
 		// weight
 		`${weight} lbs`,
-		// lbm
-		`${lbm} lbs`,
-		// chest
-		Number((1.625 * wrist + 1.3682 * ankle + 0.3562 * height).toFixed(2)),
-		// arm
-		Number((1.1709 * wrist + 0.135 * height).toFixed(2)),
-		// forearm
-		Number((0.95 * wrist + 0.1041 * height).toFixed(2)),
-		// neck
-		Number((1.1875 * wrist + 0.1301 * height).toFixed(2)),
-		// thigh
-		Number((1.4737 * ankle + 0.1918 * height).toFixed(2)),
-		// calf
-		Number((0.9812 * ankle + 0.125 * height).toFixed(2))
+		// other information
+		additionalInfo
 	];
 }
 
