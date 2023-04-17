@@ -47,7 +47,7 @@ lint:	## pnpm lint && pnpm check
 # Build & install
 # ---------------------------------------
 
-APP_VERSION ?= $(shell jq -r .version package.json)
+APP_VERSION ?= v$(shell jq -r .version package.json)
 APP_BUNDLE ?= build-${APP_VERSION}.tar.xz
 APP_RELEASE_DATE ?= $(shell date --iso)
 
@@ -71,11 +71,24 @@ deploy/delete:
 	git push origin --delete ${APP_VERSION}
 	- git tag -d ${APP_VERSION}
 
+
+REMOTE_HEAD ?= origin/master
+NUTRA_SKIP_UP_TO_DATE_CHECK ?=
+
+.PHONY: _check-git-up-to-date
+_check-git-up-to-date:
+	git branch --show-current
+	git fetch
+	# Check that we are in sync with ${REMOTE_HEAD}
+	[ "${NUTRA_SKIP_UP_TO_DATE_CHECK}" ] || git diff --quiet ${REMOTE_HEAD}
+
 PROJECT_NAME ?= web
 DEPLOY_URL ?= https://nutra.tk/
 
 .PHONY: deploy/install-prod
+deploy/install-prod: _check-git-up-to-date
 deploy/install-prod:	## Install (on prod VPS)
+	# Check the version string was extracted from package.json
 	test -n "${APP_VERSION}"
 	# Download v${APP_VERSION}
 	curl -sSLO https://github.com/nutratech/${PROJECT_NAME}/releases/download/${APP_VERSION}/${APP_BUNDLE}

@@ -8,6 +8,6 @@
 	<hr />
 	<div id="footer">
 		<span style="float:left">Built with SvelteJS.</span>
-		<span style="float:right">Nutra Web ({version})</span>
+		<span style="float:right">Nutra Web (v{version})</span>
 	</div>
 </main>

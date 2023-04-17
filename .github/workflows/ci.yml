@@ -51,7 +51,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          RELEASE_TAG=$(jq -r .version package.json)
+          RELEASE_TAG=v$(jq -r .version package.json)
           echo RELEASE_TAG=$RELEASE_TAG
           test -n "$RELEASE_TAG"
           # Test that github-cli is working
