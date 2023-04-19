@@ -318,7 +318,7 @@ function lblCasey(
 		calf: Number((0.9812 * ankle + 0.125 * height).toFixed(2))
 	};
 
-	console.info(additionalInfo);
+	// console.info(additionalInfo);
 
 	return [
 		// eq

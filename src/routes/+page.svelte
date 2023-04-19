@@ -14,9 +14,11 @@
 <main class="container">
 	<h1>Home page</h1>
 	<p>Welcome!</p>
-	<p>Check out the blog, and the calculators.</p>
+	<p>Check out the blog, calculators, and other resources.</p>
 
-	<h2>Externals</h2>
+	<p>(This is a work in progress.)</p>
+
+	<h2>Links</h2>
 	<p>Visit <a rel="external" href="/blog/">/blog/</a> for the blog</p>
 	<p>Visit <a rel="external" href="/api/">/api/</a> for API documentation</p>
 

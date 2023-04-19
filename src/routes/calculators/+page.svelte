@@ -62,7 +62,7 @@
 	let age: number | null = 30;
 
 	function updateTableBmr() {
-		console.info(bmrActivityLevel);
+		// console.info(bmrActivityLevel);
 		// two required fields for all 4 calculators
 		if (bmrWeight != null && bmrBodyFat != null) {
 			// attempt to calculate
@@ -153,6 +153,19 @@
 <main class="container">
 	<h1>Calculators</h1>
 	<p>Calculators for various fitness metrics.</p>
+	<p>
+		This page requires JavaScript ES6. Provided since Windows 7, Ubuntu 16.04, or macOS 10.10. Older
+		operating systems can use our CLI, available with
+	</p>
+	<pre>pip3 install nutra
+n calc -h</pre>
+
+	<p>
+		Note that this page does not use cookies, network requests, or save your information. All
+		calculations happen within your web browser. If you close or refresh this page, your progress
+		will be lost and you will need to start again.
+	</p>
+	<p>Enjoy the calculators. Let us know of any mistakes, suggestions, or requests.</p>
 
 	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 	<!-- One rep max -->
@@ -202,6 +215,21 @@
 			{/each}
 		</tbody>
 	</table>
+
+	<!-- Sources -->
+	<h3>Sources</h3>
+	<ul>
+		<li>
+			<a href="https://en.wikipedia.org/wiki/One-repetition_maximum">
+				1 rep-max Equations, Epley & Brzycki (Wikipedia)
+			</a>
+		</li>
+		<li>
+			<a href="https://www.peterrobertscoaching.com/blog/the-best-way-to-calculate-1-rep-max">
+				1 rep-max Equation, dos Remedios
+			</a>
+		</li>
+	</ul>
 
 	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 	<!-- Calorie expenditure (BMR) -->
@@ -302,6 +330,31 @@
 			{/each}
 		</tbody>
 	</table>
+
+	<!-- Sources -->
+	<h3>Sources</h3>
+	<ul>
+		<li>
+			<a href="https://www.calculatorpro.com/calculator/katch-mcardle-bmr-calculator/">
+				Caloric Expenditure Equation, Katch McArdle (Source 1)
+			</a>
+		</li>
+		<li>
+			<a href="https://tdeecalculator.net/about.php">
+				Caloric Expenditure Equation, Katch McArdle (& Harris Benedict)
+			</a>
+		</li>
+		<li>
+			<a href="https://www.slideshare.net/lsandon/weight-management-in-athletes-lecture">
+				Caloric Expenditure Equation, Cunningham
+			</a>
+		</li>
+		<li>
+			<a href="https://www.myfeetinmotion.com/mifflin-st-jeor-equation/">
+				Caloric Expenditure Equation, Mifflin St. Jeor
+			</a>
+		</li>
+	</ul>
 
 	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 	<!-- Body fat % -->
@@ -485,6 +538,32 @@
 		</tbody>
 	</table>
 
+	<!-- Sources -->
+	<h3>Sources</h3>
+	<ul>
+		<li>
+			<a
+				href="https://www.thecalculator.co/health/Navy-Method-Body-Fat-Measurement-Calculator-1112.html"
+			>
+				Body Fat Equation, Navy
+			</a>
+		</li>
+		<li>
+			<a
+				href="https://www.thecalculator.co/health/Body-Fat-Percentage-3-Site-Skinfold-Test-1113.html"
+			>
+				Body Fat Equation, 3 Site (skin calipers)
+			</a>
+		</li>
+		<li>
+			<a
+				href="https://www.thecalculator.co/health/Body-Fat-Percentage-7-Site-Skinfold-Calculator-1115.html"
+			>
+				Body Fat Equation, 7 Site (skin calipers)
+			</a>
+		</li>
+	</ul>
+
 	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 	<!-- Lean body limits -->
 	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
@@ -586,7 +665,35 @@
 			{/each}
 		</tbody>
 	</table>
-	<p><b>TODO:</b> Add links to sources.</p>
+
+	<!-- Sources -->
+	<h3>Sources</h3>
+	<ul>
+		<li>
+			<a href="https://rippedbody.com/maximum-muscular-potential/">
+				Lean Body Limits Equation (young men), Berkhan
+			</a>
+		</li>
+		<li>
+			<a
+				href="https://www.alanaragonblog.com/wp-content/uploads/2014/11/Aug-2014-AARR-Eric-Helms-Article.pdf"
+			>
+				Lean Body Limits Equation (young men), Eric Helms [Solved with BMI equations]
+			</a>
+		</li>
+		<li>
+			<a href="https://fastfoodmacros.com/maximum-muscular-potential-calculator.asp">
+				Lean Body Limits Equation (young men), Casey Butt
+			</a>
+		</li>
+		<li>
+			<a
+				href="https://www.poseidonperformance.com/blog/what-is-the-maximum-muscular-potential-of-drug-free-athletes-or-natural-bodybuilders"
+			>
+				Lean Body Limits Equation (young men), Casey Butt (Source 2)
+			</a>
+		</li>
+	</ul>
 
 	<!-- Footer -->
 	<Footer />
