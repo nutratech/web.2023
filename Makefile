@@ -17,6 +17,8 @@ _help:
 init:	## Install requirements (w/o --frozen-lockfile)
 	# Check version
 	[[ "$(shell pnpm --version)" =~ "8." ]]
+	# Remove old install
+	rm -rf node_modules/
 	# Install requirements
 	pnpm install
 	# Sync svelte kit (optional)
