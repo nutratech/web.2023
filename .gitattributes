@@ -1,2 +1,9 @@
+# Set config files to TypeScript (convention)
 svelte.config.js linguist-language=TypeScript
 .eslintrc.cjs linguist-language=TypeScript
+
+# Hide diff in lock files by default
+package-lock.json -diff
+yarn.lock -diff
+pnpm-lock.yaml -diff
+

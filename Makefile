@@ -57,6 +57,7 @@ APP_RELEASE_DATE ?= $(shell date --iso)
 build: clean
 build:	## Build the release
 	pnpm build
+	cp -p robots.txt build/
 	tar cJf build-${APP_VERSION}.tar.xz build/
 	du -h ${APP_BUNDLE}
 
