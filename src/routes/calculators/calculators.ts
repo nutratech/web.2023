@@ -346,10 +346,20 @@ export function _calcLblTableData(
 	const helms = validHelms
 		? lblHelms(height, desiredBodyFat)
 		: ['Helms', String(), 'Helms equation failed!'];
+
+	const additionalInfo = {
+		// lbl: `${lbm} lbs`,
+		chest: NaN,
+		arm: NaN,
+		forearm: NaN,
+		neck: NaN,
+		thigh: NaN,
+		calf: NaN
+	};
 	const casey =
 		validHelms && wrist != null && ankle != null
 			? lblCasey(height, desiredBodyFat, wrist, ankle)
-			: ['Casey', String(), 'Casey equation failed!'];
+			: ['Casey', String(), 'Casey equation failed!', additionalInfo];
 
 	return [berkhan, helms, casey];
 }

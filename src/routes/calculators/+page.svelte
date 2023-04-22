@@ -55,11 +55,11 @@
 		5: 'Extreme 5/5'
 	};
 
-	let bmrWeight: number | null = 73;
-	let bmrBodyFat: number | null = 15;
+	let bmrWeight: number | null = null;
+	let bmrBodyFat: number | null = null;
 	let gender = 'MALE';
-	let height: number | null = 179;
-	let age: number | null = 30;
+	let height: number | null = null;
+	let age: number | null = null;
 
 	function updateTableBmr() {
 		// console.info(bmrActivityLevel);
@@ -85,17 +85,17 @@
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	let bfTableData: number[] = [];
 
-	let bfWaist: number | null = 82;
-	let bfNeck: number | null = 40;
+	let bfWaist: number | null = null;
+	let bfNeck: number | null = null;
 	let bfHip: number | null = null;
 
-	let bfSkinFoldChest: number | null = 7;
-	let bfSkinFoldAbdominal: number | null = 13;
-	let bfSkinFoldThigh: number | null = 10;
-	let bfSkinFoldTricep: number | null = 9;
-	let bfSkinFoldSubscapula: number | null = 9;
-	let bfSkinFoldSuprailiac: number | null = 11;
-	let bfSkinFoldMidaxillary: number | null = 10;
+	let bfSkinFoldChest: number | null = 15;
+	let bfSkinFoldAbdominal: number | null = 15;
+	let bfSkinFoldThigh: number | null = 15;
+	let bfSkinFoldTricep: number | null = 15;
+	let bfSkinFoldSubscapula: number | null = 15;
+	let bfSkinFoldSuprailiac: number | null = 15;
+	let bfSkinFoldMidaxillary: number | null = 15;
 
 	function updateTableBf() {
 		// attempt to calculate
@@ -125,8 +125,8 @@
 	let lblTableData: (number | string | Record<string, number>)[][] = [];
 
 	let lblDesiredBodyFat: number | null = 5.5;
-	let lblWrist: number | null = 17.5;
-	let lblAnkle: number | null = 21.5;
+	let lblWrist: number | null = null;
+	let lblAnkle: number | null = null;
 
 	function updateTableLbl() {
 		// attempt to calculate
@@ -653,14 +653,14 @@ n calc -h</pre>
 		<thead>
 			<tr>
 				<th>Measurement</th>
-				<th>Max value</th>
+				<th>Max value (inches)</th>
 			</tr>
 		</thead>
 		<tbody>
 			{#each Object.entries(lblTableData.slice(-1)[0].slice(-1)[0]) as row}
 				<tr>
 					<td>{row[0]}</td>
-					<td>{row[1]} in</td>
+					<td>{row[1]}</td>
 				</tr>
 			{/each}
 		</tbody>
