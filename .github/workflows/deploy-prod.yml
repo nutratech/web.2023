@@ -1,0 +1,28 @@
+---
+name: deploy-prod
+
+"on":
+  workflow_dispatch:
+    # Can manually run this from GitHub, see:
+    # https://docs.github.com/en/actions/managing-workflow-runs/manually-running-a-workflow
+    # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_dispatch
+    inputs:
+      version:
+        description: 'Version (release / git tag)'
+        required: true
+        type: tag
+
+concurrency: prod
+
+jobs:
+  deploy-prod:
+    runs-on: [self-hosted, prod]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.version }}
+
+      - name: Install [Production]
+        run: NUTRA_SKIP_UP_TO_DATE_CHECK=1 make deploy/install-prod
