@@ -1,28 +1,51 @@
 ---
 name: deploy-prod
 
-"on":
+'on':
   workflow_dispatch:
     # Can manually run this from GitHub, see:
     # https://docs.github.com/en/actions/managing-workflow-runs/manually-running-a-workflow
     # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_dispatch
     inputs:
       version:
-        description: 'Version (release / git tag)'
+        description: 'Release/Tag (e.g. v0.3.0)'
         required: true
-        type: tag
+        type: string
 
-concurrency: prod
+concurrency: deploy-prod
 
 jobs:
   deploy-prod:
-    runs-on: [self-hosted, prod]
+    runs-on: [self-hosted, dev]
+
+    env:
+      RELEASE: ${{ inputs.version }}
+      PROD_HOST: ${{ secrets.PROD_HOST}}
+      DEPLOY_URL: 'https://nutra.tk/'
 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          ref: ${{ inputs.version }}
+        # with:
+        #   ref: ${{ inputs.version }}
+
+      - name: Download build (from GitHub assets)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release download $RELEASE -p build-$RELEASE.tar.xz
+
+      - name: Copy to production host & extract tarball
+        run: |
+          scp -p build-$RELEASE.tar.xz github@$PROD_HOST:
+          ssh github@$PROD_HOST rm -rf build/
+          ssh github@$PROD_HOST tar xf build-$RELEASE.tar.xz
 
       - name: Install [Production]
-        run: NUTRA_SKIP_UP_TO_DATE_CHECK=1 make deploy/install-prod
+        run: |
+          # Copy in place
+          ssh github@$PROD_HOST rm -rf /var/www/app/*
+          ssh github@$PROD_HOST mv build/* /var/www/app/
+          # Test live URL
+          curl -fI ${DEPLOY_URL}
+          # Old way (GitHub Action Runner is disabled now on prod)
+          # NUTRA_SKIP_UP_TO_DATE_CHECK=1 make deploy/install-prod

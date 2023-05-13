@@ -57,7 +57,6 @@ APP_RELEASE_DATE ?= $(shell date --iso)
 build: clean
 build:	## Build the release
 	pnpm build
-	cp -p robots.txt build/
 	tar cJf build-${APP_VERSION}.tar.xz build/
 	du -h ${APP_BUNDLE}
 
@@ -76,16 +75,13 @@ deploy/delete:
 
 
 REMOTE_HEAD ?= origin/master
-NUTRA_SKIP_UP_TO_DATE_CHECK ?=
 
 .PHONY: _check-git-up-to-date
 _check-git-up-to-date:
 	git branch --show-current
-ifneq ($(NUTRA_SKIP_UP_TO_DATE_CHECK),1)
 	git fetch
 	# Check that we are in sync with ${REMOTE_HEAD}
 	git diff --quiet ${REMOTE_HEAD}
-endif
 
 PROJECT_NAME ?= web
 DEPLOY_URL ?= https://nutra.tk/
