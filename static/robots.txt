@@ -1,0 +1,8 @@
+User-agent: Googlebot
+Disallow: /api/
+
+User-agent: *
+Allow: /
+
+# TODO: generate sitemap
+# Sitemap: https://nutra.tk/sitemap.xml
