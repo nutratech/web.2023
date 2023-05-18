@@ -59,6 +59,7 @@ jobs:
           gh release list -L 1
           gh release view $RELEASE_TAG || echo "PUBLISH=1" >> "$GITHUB_OUTPUT"
 
+      # yamllint disable rule:line-length
       - name: Build (production release)
         if: github.ref == 'refs/heads/master' && steps.check-release-version.outputs.PUBLISH
         env:
