@@ -30,6 +30,8 @@ jobs:
         #   ref: ${{ inputs.version }}
 
       - name: Download build (from GitHub assets)
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: gh release download $RELEASE -p build-$RELEASE.tar.xz
 
       - name: Copy to production host & extract tarball
