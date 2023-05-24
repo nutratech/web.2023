@@ -1,6 +1,19 @@
+# Block old routes (don't exist anymore)
 User-agent: Googlebot
-Disallow: /api/ /app/
+Disallow: /api/*
+Disallow: /app/*
 
+# Block indexing development host
+User-agent: Googlebot
+Disallow: /
+Host: dev.nutra.tk
+
+# Block insecure HTTP
+User-agent: Googlebot
+Disallow: /
+Host: http://nutra.tk
+
+# Allow all others
 User-agent: *
 Allow: /
 
