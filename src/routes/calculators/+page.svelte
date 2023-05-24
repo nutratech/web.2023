@@ -146,6 +146,10 @@
 <!-- Head -->
 <title>Calculators | NutraTech</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta
+	name="description"
+	content="Calculate 1 rep max (1RM), BMR, body fat (bodyfat), and muscle potential."
+/>
 
 <!-- Body -->
 <Header />

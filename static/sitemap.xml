@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Internal links -->
+  <url>
+    <loc>https://nutra.tk/calculators/</loc>
+    <lastmod>2022-06-04</lastmod>
+  </url>
+  <!-- External apps -->
+  <url>
+    <loc>https://nutra.tk/blog/</loc>
+    <lastmod>2022-06-04</lastmod>
+  </url>
+  <!-- External apps with sub-domain -->
+  <url>
+    <loc>https://store.nutra.tk/store</loc>
+    <lastmod>2022-06-04</lastmod>
+  </url>
+</urlset>

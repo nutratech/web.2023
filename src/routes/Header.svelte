@@ -1,3 +1,7 @@
+<script>
+	import { STORE_URL } from './constants.ts';
+</script>
+
 <main>
 	<nav class="container-fluid">
 		<ul>
@@ -14,7 +18,7 @@
 		<ul>
 			<li><a href="/calculators/" class="secondary">Calculators</a></li>
 			<li><a rel="external" href="/blog/" class="secondary">Blog</a></li>
-			<li><a rel="external" href="https://store.nutra.tk/store" class="secondary">Store</a></li>
+			<li><a rel="external" href={STORE_URL} class="secondary">Store</a></li>
 			<li>
 				<a
 					href="https://github.com/nutratech/web"
