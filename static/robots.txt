@@ -1,5 +1,6 @@
 # Block old routes (don't exist anymore)
 User-agent: Googlebot
+User-agent: Bingbot
 Disallow: /api/*
 Disallow: /app/*
 
