@@ -12,11 +12,11 @@
 </script>
 
 <!-- Head -->
-<head>
+<svelte:head>
 	<title>Home Page | NutraTech</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<!-- <meta name="viewport" content="width=device-width, initial-scale=1" /> -->
 	<meta name="description" content="Nutritional information, bio-hacking, blog, store." />
-</head>
+</svelte:head>
 
 <!-- Body -->
 <Header />
