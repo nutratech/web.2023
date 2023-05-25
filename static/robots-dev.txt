@@ -1,0 +1,9 @@
+# Block development server
+User-agent: Googlebot
+User-agent: Bingbot
+User-agent: AdIdxBot
+Disallow: /
+
+# Allow all others
+User-agent: *
+Allow: /

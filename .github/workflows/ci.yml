@@ -29,6 +29,9 @@ jobs:
         if: github.ref == 'refs/heads/dev'
         run: pnpm build:dev
 
+      - name: Copy robots-dev.txt in place
+        run: mv static/robots-dev.txt static/robots.txt
+
       - name: Deploy (dev) [Copy static files over]
         if: github.ref == 'refs/heads/dev'
         run: rm -rf /var/www/app/* && mv build/* /var/www/app/
