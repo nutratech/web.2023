@@ -5,11 +5,6 @@ User-agent: AdIdxBot
 Disallow: /api/*
 Disallow: /app/*
 
-# Block indexing development host
-User-agent: Googlebot
-Disallow: /
-Host: dev.nutra.tk
-
 # Allow all others
 User-agent: *
 Allow: /
