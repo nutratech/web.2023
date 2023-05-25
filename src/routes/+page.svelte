@@ -12,10 +12,11 @@
 </script>
 
 <!-- Head -->
-<title>Home Page | NutraTech</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="description" content="Nutritional information, store, blog." />
-<head />
+<head>
+	<title>Home Page | NutraTech</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="description" content="Nutritional information, bio-hacking, blog, store." />
+</head>
 
 <!-- Body -->
 <Header />
