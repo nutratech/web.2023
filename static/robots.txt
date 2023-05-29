@@ -4,6 +4,7 @@ User-agent: Bingbot
 User-agent: AdIdxBot
 Disallow: /api/*
 Disallow: /app/*
+Disallow: /docs/*
 
 # Allow all others
 User-agent: *
