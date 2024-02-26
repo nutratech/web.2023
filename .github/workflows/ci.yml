@@ -14,7 +14,7 @@ jobs:
     runs-on: [self-hosted, dev]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Extras / Count Lines of Source Code
         run: make extras/cloc
@@ -61,6 +61,7 @@ jobs:
           # Test that github-cli is working
           gh --version
           gh release list -L 1
+          # TODO: enhance this to be: if release_tag > current_prod_tag, deploy
           gh release view $RELEASE_TAG || echo "PUBLISH=1" >> "$GITHUB_OUTPUT"
 
       # yamllint disable rule:line-length
